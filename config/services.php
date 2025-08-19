@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'whatsapp' => [
+        'webhook_verify_token' => env('WA_WEBHOOK_TOKEN'),
+        'from_phone_number_id' => env('WA_FROM_PHONE_NUMBER_ID'),
+        'token' => env('WA_TOKEN'),
+    ],
+
 ];
