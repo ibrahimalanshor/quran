@@ -9,10 +9,14 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.17",
     "astro": "^5.16.4",
-    "xml2js": "^0.6.2"
+    "tailwindcss": "^4.1.17",
+    "xml-parser": "^1.2.1"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.10",
+    "@types/xml-parser": "^1.2.33",
     "@types/xml2js": "^0.4.14"
   }
 }

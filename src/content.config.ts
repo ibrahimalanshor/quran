@@ -1,6 +1,7 @@
 import { defineCollection, z } from "astro:content";
 import { file } from "astro/loaders";
 import { Parser } from 'xml2js'
+import parser from 'xml-parser'
 
 const xmlParser = new Parser({ explicitArray: false })
 
@@ -15,17 +16,22 @@ function verseParser(content: string) {
     })
 }
 
-async function chapterParser(content: string) {
-  const res = await xmlParser.parseStringPromise(content)
+function chapterParser(content: string) {
+  const data = parser(content)
+  const chapters = data.root.children.find(child => child.name === 'suras')
 
-  return res.quran.suras.sura.map(sura => ({
-    id: sura.$.index,
-    verses: sura.$.ayas,
-    start: sura.$.start,
-    name: sura.$.name,
-    latin: sura.$.tname,
-    translate: sura.$.ename,
-    type: sura.$.type
+  if (!chapters) {
+    return []
+  }
+
+  return chapters.children.map(child => ({
+    id: child.attributes.index,
+    verses: +child.attributes.ayas,
+    start: +child.attributes.start,
+    name: child.attributes.name,
+    latin: child.attributes.tname,
+    translate: child.attributes.ename,
+    type: child.attributes.type
   }))
 }
 
