@@ -1,3 +1,28 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/forms";
 
+@font-face {
+  font-family: Uthman;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/UthmanTN_v2-0.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Uthman;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/UthmanTNB_v2-0.ttf") format("truetype");
+}
+
+@theme {
+  --font-arab: "Uthman", sans-serif;
+}
+
+@layer base {
+  :dir(rtl) {
+    font-family: var(--font-arab);
+  }
+}

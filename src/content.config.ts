@@ -1,9 +1,6 @@
 import { defineCollection, z } from "astro:content";
 import { file } from "astro/loaders";
-import { Parser } from 'xml2js'
 import parser from 'xml-parser'
-
-const xmlParser = new Parser({ explicitArray: false })
 
 function verseParser(content: string) {
   return content 
