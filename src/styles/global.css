@@ -18,6 +18,7 @@
 }
 
 @theme {
+  --font-sans: 'Inter', sans-serif;
   --font-arab: "Uthman", sans-serif;
 }
 
