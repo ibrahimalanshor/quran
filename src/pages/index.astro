@@ -2,6 +2,8 @@
 import '@fontsource/inter';
 import "../styles/global.css"
 import { getCollection } from "astro:content";
+import { Icon } from 'astro-icon/components'
+import BaseContainer from './src/components/base/BaseContainer.astro'
 
 const chapters = await getCollection('chapters')
 ---
@@ -15,26 +17,30 @@ const chapters = await getCollection('chapters')
 		<title>Astro</title>
 	</head>
 	<body class="text-neutral-900">
-    <main class="px-4 py-20 space-y-4 mx-auto sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg">
+    <nav class="h-14 border-b border-neutral-300 flex items-center">
+      <BaseContainer class="flex items-center justify-between">
+        <button class="md:hidden">
+          <Icon name="tabler:menu-2" />
+        </button> 
+        <h1 class="font-bold">Al-Quran Online</h1>
+        <button>
+          <Icon name="tabler:moon" />
+        </button>
+      </BaseContainer>
+    </nav>
+    <BaseContainer tag="main" class="space-y-4 py-8 mx-auto md:py-10 lg:py-12">
       <h1 class="text-center font-bold text-2xl md:text-3xl xl:text-4xl">Baca Al-Quran Online</h1>
       <input type="search" placeholder="Cari nama surat" class="w-full rounded-md h-11 border-neutral-300 placeholder-neutral-400 focus:border-green-600 focus:ring-2 focus:ring-green-600" />
-      <ol class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {chapters.map(chapter => <li data-chapter={chapter.data.latin} class="flex justify-between bg-neutral-100 rounded-md p-4 border border-neutral-300">
-          <div>
-            <div class="flex gap-1 font-semibold">
-              <p>{chapter.id}.</p>
-              <p>{chapter.data.latin}</p>
-            </div>
-            <p class="text-sm text-neutral-500 flex gap-2 items-center">
-              {chapter.data.translate}
-              <span class="w-1 h-1 bg-neutral-400 rounded-full"></span>
-              {chapter.data.verses} ayat
-            </p>
-          </div>
-          <p dir="rtl" class="text-xl font-bold self-center text-green-600">{chapter.data.name}</p>
+      <ol class="grid gap-y-2 md:grid-cols-2 md:gap-x-6 lg:grid-cols-3 lg:gap-x-8">
+        {chapters.map(chapter => <li data-chapter={chapter.data.latin} class="flex justify-between">
+          <a href={`chapters/${chapter.data.slug}`} class="flex gap-1 font-medium hover:underline">
+            <span>{chapter.id}.</span>
+            <span>{chapter.data.latin}</span>
+          </a> 
+          <a href={`chapters/${chapter.data.slug}`} dir="rtl" class="text-xl font-bold self-center text-green-600 hover:text-green-700">{chapter.data.name}</a>
         </li>)}
       </ol>
-    </main>
+    </BaseContainer>
 	</body>
 
   <script>

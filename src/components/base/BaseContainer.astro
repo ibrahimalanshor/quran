@@ -1,0 +1,7 @@
+---
+const { class: classes = '', tag: Element = 'div' } = Astro.props
+---
+
+<Element class={`px-4 mx-auto w-full sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg ${classes}`}>
+  <slot />
+</Element>

@@ -23,6 +23,7 @@ function chapterParser(content: string) {
 
   return chapters.children.map(child => ({
     id: child.attributes.index,
+    slug: child.attributes.tname.toLowerCase().replace(/[^a-z-]/gi, ''),
     verses: +child.attributes.ayas,
     start: +child.attributes.start,
     name: child.attributes.name,
@@ -45,6 +46,7 @@ const chapters = defineCollection({
   loader: file('src/data/quran-data.xml', { parser: chapterParser }),
   schema: z.object({
     verses: z.number(),
+    slug: z.string(),
     start: z.number(),
     name: z.string(),
     latin: z.string(),
