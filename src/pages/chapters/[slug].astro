@@ -17,7 +17,17 @@ const verses = await getCollection('verses', verse => verse.data.chapter.id === 
 ---
 
 <Default>
-  <BaseContainer dir="rtl" class="text-justify">
-    {verses.map(verse => <span dir="rtl" class="text-2xl text-justify">{verse.data.text}</span>)}
-  <BaseContainer>
+  <section class="text-center space-y-2 sm:flex sm:justify-between sm:items-center sm:text-left sm:space-y-0">
+    <p dir="rtl" class="font-bold text-4xl text-green-600 sm:order-last lg:text-5xl">{chapter.data.name}</p>
+    <div class="md:space-y-1 lg:space-y-2">
+      <h1 class="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl">{chapter.data.latin}</h1>
+      <p class="flex items-center justify-center gap-2 text-neutral-500">
+        <span>Surah no. {chapter.id}</span>
+        <span class="w-1 h-1 block bg-neutral-300 rounded-full"></span>
+        <span>{chapter.data.type}</span>
+        <span class="w-1 h-1 block bg-neutral-300 rounded-full"></span>
+        <span>{chapter.data.verses} ayat</span>
+      </p>
+    </div>
+  </section>
 </Default>

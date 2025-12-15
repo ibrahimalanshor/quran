@@ -2,59 +2,21 @@
 import '@fontsource/inter';
 import "../styles/global.css"
 import { getCollection } from "astro:content";
-import { Icon } from 'astro-icon/components'
-import BaseContainer from './src/components/base/BaseContainer.astro'
+import Default from './src/components/layouts/Default.astro'
 
 const chapters = await getCollection('chapters')
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body class="text-neutral-900">
-    <nav class="h-14 border-b border-neutral-300 flex items-center">
-      <BaseContainer class="flex items-center justify-between">
-        <button class="md:hidden">
-          <Icon name="tabler:menu-2" />
-        </button> 
-        <h1 class="font-bold">Al-Quran Online</h1>
-        <button>
-          <Icon name="tabler:moon" />
-        </button>
-      </BaseContainer>
-    </nav>
-    <BaseContainer tag="main" class="space-y-4 py-8 mx-auto md:py-10 lg:py-12">
-      <h1 class="text-center font-bold text-2xl md:text-3xl xl:text-4xl">Baca Al-Quran Online</h1>
-      <input type="search" placeholder="Cari nama surat" class="w-full rounded-md h-11 border-neutral-300 placeholder-neutral-400 focus:border-green-600 focus:ring-2 focus:ring-green-600" />
-      <ol class="grid gap-y-2 md:grid-cols-2 md:gap-x-6 lg:grid-cols-3 lg:gap-x-8">
-        {chapters.map(chapter => <li data-chapter={chapter.data.latin} class="flex justify-between">
-          <a href={`chapters/${chapter.data.slug}`} class="flex gap-1 font-medium hover:underline">
-            <span>{chapter.id}.</span>
-            <span>{chapter.data.latin}</span>
-          </a> 
-          <a href={`chapters/${chapter.data.slug}`} dir="rtl" class="text-xl font-bold self-center text-green-600 hover:text-green-700">{chapter.data.name}</a>
-        </li>)}
-      </ol>
-    </BaseContainer>
-	</body>
-
-  <script>
-    const searchInput = document.querySelector('main input')
-    const chapters = document.querySelectorAll('[data-chapter]')
-
-    searchInput?.addEventListener('input', e => {
-      chapters.forEach(chapter => {
-        if (chapter.dataset.chapter.toLowerCase().includes(e.target.value.toLowerCase())) {
-          chapter.classList.remove('hidden')
-        } else {
-          chapter.classList.add('hidden')
-        }
-      }) 
-    })
-  </script>
-</html> 
+<Default>
+  <h1 class="text-center font-bold text-2xl md:text-3xl xl:text-4xl">Baca Al-Quran Online</h1>
+  <input type="search" placeholder="Cari nama surat" class="w-full rounded-md h-11 border-neutral-300 placeholder-neutral-400 focus:border-green-600 focus:ring-2 focus:ring-green-600" />
+  <ol class="grid gap-y-2 md:grid-cols-2 md:gap-x-6 lg:grid-cols-3 lg:gap-x-8">
+    {chapters.map(chapter => <li data-chapter={chapter.data.latin} class="flex justify-between">
+      <a href={`chapters/${chapter.data.slug}`} class="flex gap-1 font-medium hover:underline">
+        <span>{chapter.id}.</span>
+        <span>{chapter.data.latin}</span>
+      </a> 
+      <a href={`chapters/${chapter.data.slug}`} dir="rtl" class="text-xl font-bold self-center text-green-600 hover:text-green-700">{chapter.data.name}</a>
+    </li>)}
+  </ol>
+</Default>
