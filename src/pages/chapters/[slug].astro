@@ -1,0 +1,12 @@
+---
+import { getCollection } from 'astro:content'
+
+export async function getStaticPaths() {
+    const chapters = await getCollection('chapters')
+
+    return chapters.map(chapter => ({
+        params: { slug: chapter.data.slug },
+        props: { chapter }
+    }))
+}
+---
