@@ -1,4 +1,4 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection, z, reference } from "astro:content";
 import { file } from "astro/loaders";
 import parser from 'xml-parser'
 
@@ -9,7 +9,7 @@ function verseParser(content: string) {
     .map(row => {
       const [chapter, verse, text] = row.split('|')
 
-      return { id: `${chapter}-${verse}`, chapter: +chapter, verse: +verse, text }
+      return { id: `${chapter}-${verse}`, chapter: chapter, verse: +verse, text }
     })
 }
 
@@ -36,7 +36,7 @@ function chapterParser(content: string) {
 const verses = defineCollection({
   loader: file('src/data/verses.txt', { parser: verseParser }),
   schema: z.object({
-    chapter: z.number(),
+    chapter: reference('chapters'),
     verse: z.number(),
     text: z.string()
   })

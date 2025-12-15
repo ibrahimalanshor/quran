@@ -1,5 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
+import Default from '../../components/layouts/Default.astro'
+import BaseContainer from '../../components/base/BaseContainer.astro'
 
 export async function getStaticPaths() {
     const chapters = await getCollection('chapters')
@@ -9,4 +11,13 @@ export async function getStaticPaths() {
         props: { chapter }
     }))
 }
+
+const { chapter } = Astro.props
+const verses = await getCollection('verses', verse => verse.data.chapter.id === chapter.id)
 ---
+
+<Default>
+  <BaseContainer dir="rtl" class="text-justify">
+    {verses.map(verse => <span dir="rtl" class="text-2xl text-justify">{verse.data.text}</span>)}
+  <BaseContainer>
+</Default>
