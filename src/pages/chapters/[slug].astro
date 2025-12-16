@@ -25,7 +25,7 @@ function toArabicNum(str) {
 
 <Default>
   <section class="text-center space-y-2 sm:flex sm:justify-between sm:items-center sm:text-left sm:space-y-0">
-    <p dir="rtl" class="font-bold text-4xl text-green-600 sm:order-last lg:text-5xl">{chapter.data.name}</p>
+    <p dir="rtl" class="font-bold text-3xl text-green-600 sm:order-last lg:text-4xl">{chapter.data.name}</p>
     <div class="md:space-y-1 lg:space-y-2">
       <h1 class="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl">{chapter.data.latin}</h1>
       <p class="flex items-center justify-center gap-2 text-neutral-500">
@@ -39,12 +39,12 @@ function toArabicNum(str) {
   </section>
   <article class="divide-y divide-neutral-300">
     {chapter.id != 1 && chapter.id != 9 && <div class="py-4">
-      <p dir="rtl" class="text-3xl text-center leading-loose lg:text-4xl">{bismillah}</p>
+      <p dir="rtl" class="text-2xl text-center leading-loose lg:text-3xl">{bismillah}</p>
     </div>}
     {verses.map((verse, index) => <div class="py-4">
-      <p dir="rtl" class="text-3xl leading-loose lg:text-4xl">
+      <p dir="rtl" class="text-2xl leading-loose lg:text-3xl">
         {chapter.id != 1 && chapter.id != 9 && index === 0 ? verse.data.text.slice(bismillah.length) : verse.data.text}
-        <span class="mx-2">{toArabicNum(`${verse.data.verse}`)}</span>
+        <span class="mx-2 text-3xl lg:text-4xl text-yellow-800 font-bold">{toArabicNum(`${verse.data.verse}`)}</span>
       </p>
     </div>)}
   </article>
