@@ -14,6 +14,7 @@ export async function getStaticPaths() {
 
 const { chapter } = Astro.props
 const verses = await getCollection('verses', verse => verse.data.chapter.id === chapter.id)
+const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ'
 ---
 
 <Default>
@@ -30,4 +31,12 @@ const verses = await getCollection('verses', verse => verse.data.chapter.id === 
       </p>
     </div>
   </section>
+  <article class="divide-y divide-neutral-300">
+    {chapter.id != 1 && chapter.id != 9 && <div class="py-4">
+      <p dir="rtl" class="text-3xl text-center leading-loose lg:text-4xl">{bismillah}</p>
+    </div>}
+    {verses.map((verse, index) => <div class="py-4">
+      <p dir="rtl" class="text-3xl leading-loose lg:text-4xl">{chapter.id != 1 && chapter.id != 9 && index === 0 ? verse.data.text.slice(bismillah.length) : verse.data.text}</p>
+    </div>)}
+  </article>
 </Default>

@@ -20,3 +20,18 @@ const chapters = await getCollection('chapters')
     </li>)}
   </ol>
 </Default>
+
+<script>
+  const searchInput = document.querySelector('main input')
+  const chapters = document.querySelectorAll('[data-chapter]')
+
+  searchInput?.addEventListener('input', e => {
+    chapters.forEach(chapter => {
+      if (chapter.dataset.chapter.toLowerCase().includes(e.target.value.toLowerCase())) {
+        chapter.classList.remove('hidden')
+      } else {
+        chapter.classList.add('hidden')
+      }
+    }) 
+  })
+</script>
