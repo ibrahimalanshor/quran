@@ -8,6 +8,18 @@ function verseParser(content: string) {
     .slice(0, 6236)
     .map(row => {
       const [chapter, verse, text] = row.split('|')
+      const id = `${chapter}-${verse}`
+
+      return { id, chapter: chapter, verse: +verse, text, translation: id }
+    })
+}
+
+function translationParser(content: string) {
+  return content 
+    .split('\n')
+    .slice(0, 6236)
+    .map(row => {
+      const [chapter, verse, text] = row.split('|')
 
       return { id: `${chapter}-${verse}`, chapter: chapter, verse: +verse, text }
     })
@@ -38,7 +50,8 @@ const verses = defineCollection({
   schema: z.object({
     chapter: reference('chapters'),
     verse: z.number(),
-    text: z.string()
+    text: z.string(),
+    translation: reference('translations')
   })
 })
 
@@ -55,4 +68,13 @@ const chapters = defineCollection({
   })
 })
 
-export const collections = { verses, chapters }
+const translations = defineCollection({
+  loader: file('src/data/translates.indonesian.txt', { parser: translationParser }),
+  schema: z.object({
+    verse: z.number(),
+    chapter: reference('chapters'),
+    text: z.string()
+  })
+})
+
+export const collections = { verses, chapters, translations }

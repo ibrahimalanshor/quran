@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
 import Default from '../../components/layouts/Default.astro'
-import BaseContainer from '../../components/base/BaseContainer.astro'
+import VerseRow from '../../components/verse/VerseRow.astro'
 
 export async function getStaticPaths() {
     const chapters = await getCollection('chapters')
@@ -15,12 +15,6 @@ export async function getStaticPaths() {
 const { chapter } = Astro.props
 const verses = await getCollection('verses', verse => verse.data.chapter.id === chapter.id)
 const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ'
-
-function toArabicNum(str) {
-  const arabicNum = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩']
-
-  return str.replace(/\d/gi, d => arabicNum[d])
-}
 ---
 
 <Default>
@@ -41,11 +35,6 @@ function toArabicNum(str) {
     {chapter.id != 1 && chapter.id != 9 && <div class="py-4">
       <p dir="rtl" class="text-2xl text-center leading-loose lg:text-3xl">{bismillah}</p>
     </div>}
-    {verses.map((verse, index) => <div class="py-4">
-      <p dir="rtl" class="text-2xl leading-loose lg:text-3xl">
-        {chapter.id != 1 && chapter.id != 9 && index === 0 ? verse.data.text.slice(bismillah.length) : verse.data.text}
-        <span class="mx-2 text-3xl lg:text-4xl text-yellow-800 font-bold">{toArabicNum(`${verse.data.verse}`)}</span>
-      </p>
-    </div>)}
+    {verses.map(verse => <VerseRow verse={verse} />)}
   </article>
 </Default>
