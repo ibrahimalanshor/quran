@@ -17,9 +17,17 @@
   src: url("../assets/fonts/UthmanTNB_v2-0.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: LPMQ;
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../assets/fonts/LPMQ IsepMisbah.ttf") format("truetype");
+}
+
 @theme {
   --font-sans: 'Inter', sans-serif;
-  --font-arab: "Uthman", sans-serif;
+  --font-arab: "LPMQ", sans-serif;
 }
 
 @layer base {
