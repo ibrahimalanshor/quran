@@ -12,9 +12,12 @@ function toArabicNum(str: string) : string {
 }
 ---
 
-<div class="py-4">
-      <p dir="rtl" class="text-2xl leading-loose lg:text-3xl">
-        {chapter.id != 1 && chapter.id != 9 && verse.data.verse === 1 ? verse.data.text.slice(39) : verse.data.text}
-        <span class="mx-2 text-3xl lg:text-4xl text-yellow-800 font-bold">{toArabicNum(`${verse.data.verse}`)}</span>
-      </p>
-    </div>
+<div class="py-6 space-y-4">
+  <p dir="rtl" class="text-2xl leading-loose lg:text-3xl">
+    {chapter.id != 1 && chapter.id != 9 && verse.data.verse === 1 ? verse.data.text.slice(39) : verse.data.text}
+    <span class="mx-2 text-3xl lg:text-4xl text-yellow-800 font-bold">{toArabicNum(`${verse.data.verse}`)}</span>
+  </p>
+  <p class="leading-relaxed">
+    {translation.data.text}
+  </p>      
+</div>
