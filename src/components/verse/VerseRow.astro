@@ -13,8 +13,13 @@ function toArabicNum(str: string) : string {
     {verse.data.text}
     <span class="mx-2 text-3xl lg:text-4xl text-yellow-800 font-bold">{toArabicNum(`${verse.data.verse}`)}</span>
   </p>
-  <p class="leading-relaxed">
-    {verse.data.verse}. 
-    {verse.data.translation}
-  </p>      
+  <div class="space-y-2">
+    <p class="leading-relaxed text-green-700">
+      {verse.data.latin}
+    </p>
+    <p class="leading-relaxed">
+      {verse.data.verse}.
+      {verse.data.translation}
+    </p>      
+  </div>
 </div>
