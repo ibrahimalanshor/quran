@@ -1,62 +1,48 @@
 import { defineCollection, z, reference } from "astro:content";
 import { file } from "astro/loaders";
-import parser from 'xml-parser'
+import { parse as parseCsv } from "csv-parse/sync";
 
 function verseParser(content: string) {
-  return content 
-    .split('\n')
-    .slice(0, 6236)
-    .map(row => {
-      const [chapter, verse, text] = row.split('|')
-      const id = `${chapter}-${verse}`
-
-      return { id, chapter: chapter, verse: +verse, text, translation: id }
-    })
-}
-
-function translationParser(content: string) {
-  return content 
-    .split('\n')
-    .slice(0, 6236)
-    .map(row => {
-      const [chapter, verse, text] = row.split('|')
-
-      return { id: `${chapter}-${verse}`, chapter: chapter, verse: +verse, text }
-    })
+  return parseCsv<{ id: string, ayah: string, arabic: string, latin: string, footnotes: string, translation: string, surah_id: string }>(content, { skip_empty_lines: true, columns: true })
+    .map(verse => ({
+      id: verse.id,
+      chapter: verse.surah_id,
+      text: verse.arabic,
+      latin: verse.latin,
+      footnotes: verse.footnotes,
+      translation: verse.translation,
+      verse: +verse.ayah
+    }))
 }
 
 function chapterParser(content: string) {
-  const data = parser(content)
-  const chapters = data.root.children.find(child => child.name === 'suras')
-
-  if (!chapters) {
-    return []
-  }
-
-  return chapters.children.map(child => ({
-    id: child.attributes.index,
-    slug: child.attributes.tname.toLowerCase().replace(/[^a-z-]/gi, ''),
-    verses: +child.attributes.ayas,
-    start: +child.attributes.start,
-    name: child.attributes.name,
-    latin: child.attributes.tname,
-    translate: child.attributes.ename,
-    type: child.attributes.type
+  return parseCsv<{ id: number, transliteration: string, num_ayah: number, page: number, arabic: string, translation: string, location: string }>(content, { columns: true })
+    .map(chapter => ({
+      id: chapter.id,
+      slug: chapter.transliteration.toLowerCase().replace(/[^a-z-]/gi, ''),
+      verses: +chapter.num_ayah,
+      start: +chapter.page,
+      name: chapter.arabic,
+      latin: chapter.transliteration,
+      translate: chapter.translation,
+      type: chapter.location 
   }))
 }
 
 const verses = defineCollection({
-  loader: file('src/data/verses.txt', { parser: verseParser }),
+  loader: file('src/data/verses.csv', { parser: verseParser }),
   schema: z.object({
     chapter: reference('chapters'),
     verse: z.number(),
     text: z.string(),
-    translation: reference('translations')
+    latin: z.string(),
+    footnotes: z.string(),
+    translation: z.string()
   })
 })
 
 const chapters = defineCollection({
-  loader: file('src/data/quran-data.xml', { parser: chapterParser }),
+  loader: file('src/data/chapters.csv', { parser: chapterParser }),
   schema: z.object({
     verses: z.number(),
     slug: z.string(),
@@ -64,17 +50,8 @@ const chapters = defineCollection({
     name: z.string(),
     latin: z.string(),
     translate: z.string(),
-    type: z.enum(['Meccan', 'Medinan'])
+    type: z.enum(['Makkiyah', 'Madaniyah'])
   })
 })
 
-const translations = defineCollection({
-  loader: file('src/data/translates.indonesian.txt', { parser: translationParser }),
-  schema: z.object({
-    verse: z.number(),
-    chapter: reference('chapters'),
-    text: z.string()
-  })
-})
-
-export const collections = { verses, chapters, translations }
+export const collections = { verses, chapters }

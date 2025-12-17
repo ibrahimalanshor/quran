@@ -32,7 +32,7 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
     </div>
   </section>
   <article class="divide-y divide-neutral-300">
-    {chapter.id != 1 && chapter.id != 9 && <div class="py-6 space-y-4 text-center">
+    {chapter.id !== '1' && chapter.id !== '9' && <div class="py-6 space-y-4 text-center">
       <p dir="rtl" class="text-2xl leading-loose lg:text-3xl">{bismillah}</p>
       <p class="leading-relaxed">Dengan menyebut nama Allah Yang Maha Pemurah lagi Maha Penyayang.</p>
     </div>}
