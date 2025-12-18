@@ -31,10 +31,29 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
       </p>
     </div>
   </section>
+  <select id="select-ayat" class="w-full h-11 border-gray-300 rounded-md focus:ring-2 focus:ring-green-600 focus:border-green-600 lg:w-auto lg:ml-auto">
+    <option disabled selected>Pilih Ayat</option>
+    {verses.map(verse => <option value={verse.data.verse}>{verse.data.verse}</option>)}
+  </select>
   <article class="divide-y divide-neutral-300">
-    {chapter.id !== '1' && chapter.id !== '9' && <div class="py-6 space-y-4 text-center">
+    {chapter.id !== '1' && chapter.id !== '9' && <div class="pt-2 pb-6 space-y-4 text-center">
       <p dir="rtl" class="text-2xl leading-loose lg:text-3xl">{bismillah}</p>
     </div>}
     {verses.map(verse => <VerseRow verse={verse} />)}
   </article>
 </Default>
+
+<script>
+document.querySelector('#select-ayat')!
+  .addEventListener('change', e => {
+    const value = (e.target as HTMLSelectElement).value
+
+    const ayatEl = document.getElementById(value)
+
+    if (ayatEl) {
+      ayatEl.scrollIntoView({ behavior: 'smooth' })
+
+      history.pushState(null, '', `#${value}`)
+    }
+  })
+</script>

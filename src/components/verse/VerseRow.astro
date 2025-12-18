@@ -9,7 +9,7 @@ function toArabicNum(str: string) : string {
 }
 ---
 
-<div class="py-6 space-y-4">
+<div id={verse.data.verse} class={`${verse.data.chapter.id === '1' || verse.data.chapter.id === '9' ? 'pt-2 pb-6' : 'py-6'} space-y-4`}>
   <p dir="rtl" class="text-2xl leading-loose lg:text-3xl">
     {verse.data.text}
     <span class="mx-2 text-3xl lg:text-4xl text-yellow-800 font-bold">{toArabicNum(`${verse.data.verse}`)}</span>
