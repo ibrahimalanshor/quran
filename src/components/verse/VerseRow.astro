@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components"
 const { verse } = Astro.props
 
 function toArabicNum(str: string) : string {
@@ -21,5 +22,13 @@ function toArabicNum(str: string) : string {
       {verse.data.verse}.
       {verse.data.translation}
     </p>      
+  </div>
+  <div class="flex gap-2 justify-end lg:justify-start">
+    <button class="cursor-pointer text-neutral-700 hover:text-green-700" title="Lihat Tafsir">
+      <Icon name="tabler:book" class="size-5" />
+    </button>
+    <button class="cursor-pointer text-neutral-700 hover:text-green-700" title="Salin Ayat">
+      <Icon name="tabler:copy" class="size-5" />
+    </button>
   </div>
 </div>

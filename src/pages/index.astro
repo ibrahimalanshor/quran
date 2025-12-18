@@ -16,7 +16,7 @@ const chapters = await getCollection('chapters')
         <span>{chapter.id}.</span>
         <span>{chapter.data.latin}</span>
       </a> 
-      <a href={`chapters/${chapter.data.slug}`} dir="rtl" class="text-xl font-bold self-center text-green-600 hover:text-green-700">{chapter.data.name}</a>
+      <a href={`chapters/${chapter.data.slug}`} dir="rtl" class="text-xl font-bold self-center text-green-700 hover:text-green-800">{chapter.data.name}</a>
     </li>)}
   </ol>
 </Default>
