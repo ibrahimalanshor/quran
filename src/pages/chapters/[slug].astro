@@ -44,6 +44,8 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
 </Default>
 
 <script>
+import tippy from 'tippy.js'
+
 document.querySelector('#select-ayat')!
   .addEventListener('change', e => {
     const value = (e.target as HTMLSelectElement).value
@@ -56,4 +58,30 @@ document.querySelector('#select-ayat')!
       history.pushState(null, '', `#${value}`)
     }
   })
+
+const copyVersesBtn = tippy('.copy-verse', {
+  trigger: 'manual'
+})
+
+const chapterName = document.querySelector('h1')!.textContent
+
+copyVersesBtn.forEach(btn => {
+  btn.reference.addEventListener('click', async () => {
+    const verseNumber = (btn.reference as HTMLButtonElement).dataset.verseNumber as string
+    const title = `Q.S ${chapterName}: ${verseNumber}`
+    const text = document.getElementById(verseNumber)!
+      .querySelector(`.verse-text`)!
+      .textContent
+    const translation = document.getElementById(verseNumber)!
+      .querySelector(`.verse-translation`)!
+      .textContent
+
+    const content = `${title}\n${text}\n${translation}`
+
+    await navigator.clipboard.writeText(content)
+
+    btn.setContent('Ayat berhasil disalin!')
+    btn.show()
+  })
+})
 </script>
