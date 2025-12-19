@@ -25,8 +25,11 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
   <section class="text-center space-y-4 sm:flex sm:justify-between sm:items-center sm:text-left sm:space-y-0">
     <p dir="rtl" class="font-bold text-3xl text-green-700 sm:order-last lg:text-4xl">{chapter.data.name}</p>
     <div class="md:space-y-1 lg:space-y-2">
-      <h1 class="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl">{chapter.data.latin}</h1>
-      <p class="flex items-center justify-center gap-2 text-neutral-500">
+      <h1 class="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl">
+        <span>{chapter.data.latin}</span>
+        <span>({ chapter.data.translate })</span>
+      </h1>
+      <p class="flex items-center justify-center gap-2 text-neutral-500 sm:justify-start">
         <span>Surah no. {chapter.id}</span>
         <span class="w-1 h-1 block bg-neutral-300 rounded-full"></span>
         <span>{chapter.data.type}</span>
@@ -45,7 +48,7 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
     </div>}
     {verses.map(verse => <VerseRow verse={verse} />)}
   </article>
-  <nav class={`border-t border-neutral-300 py-6 flex items-center ${chapter.id === '1' ? 'justify-end' : 'justify-between'}`}>
+  <nav class={`mb-4 lg:mb-0 border-t border-neutral-300 py-6 flex items-center ${chapter.id === '1' ? 'justify-end' : 'justify-between'}`}>
     {prevChapter && <BaseLink href={`/chapters/${prevChapter.data.slug}`} class="flex items-center gap-2" color="primary">
       <Icon name="tabler:arrow-left" />
       {prevChapter.data.latin} 
@@ -54,6 +57,9 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
       {nextChapter.data.latin} 
       <Icon name="tabler:arrow-right" />
     </BaseLink>}
+    <button id="go-up" class="fixed bottom-4 right-4 cursor-pointer bg-green-700 hover:bg-green-800 text-white w-12 h-12 rounded-full flex items-center justify-center hidden" title="Pergi ke Ayat Pertama">
+      <Icon name="tabler:chevron-up" class="size-5 font-bold" />
+    </button>
   </nav>
 </Default>
 
@@ -75,7 +81,7 @@ const copyVersesBtn = tippy('.copy-verse', {
   trigger: 'manual'
 })
 
-const chapterName = document.querySelector('h1')!.textContent
+const chapterName = document.querySelector('h1')!.firstElementChild?.textContent
 
 copyVersesBtn.forEach(btn => {
   btn.reference.addEventListener('click', async () => {
@@ -96,4 +102,11 @@ copyVersesBtn.forEach(btn => {
     btn.show()
   })
 })
+
+const firstVerse = document.getElementById('1') as HTMLDivElement
+const goUpBtn = document.querySelector('#go-up') as HTMLButtonElement
+const goUpObserver = new IntersectionObserver(([entry]) => entry.isIntersecting ? goUpBtn.classList.add('hidden') : goUpBtn.classList.remove('hidden'), { threshold: 0 })
+
+goUpBtn.addEventListener('click', () => window.scroll({ top: 0, behavior: 'smooth' }))
+goUpObserver.observe(firstVerse)
 </script>
