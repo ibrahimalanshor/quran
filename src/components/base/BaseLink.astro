@@ -1,0 +1,19 @@
+---
+interface Props {
+  href: string
+  color?: 'dark' | 'primary'
+  class?: string
+  [key: string]: any
+}
+
+const { href, color = 'dark', class: classes = '', ...props } = Astro.props
+
+const colorClass = {
+  dark: 'text-neutral-900',
+  primary: 'text-green-700 hover:text-green-800'
+}[color]
+---
+
+<a {...props} href={href} class={`hover:underline ${classes} ${colorClass}`}>
+  <slot />
+</a>

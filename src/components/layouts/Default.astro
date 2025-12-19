@@ -4,8 +4,6 @@ import "../../styles/global.css"
 import 'tippy.js/dist/tippy.css';
 import { Icon } from 'astro-icon/components'
 import BaseContainer from '../base/BaseContainer.astro'
-
-const BrandTag = Astro.url.pathname === '/' ? 'h1' : 'p'
 ---
 
 <html lang="en">
@@ -22,7 +20,7 @@ const BrandTag = Astro.url.pathname === '/' ? 'h1' : 'p'
         <button class="md:hidden">
           <Icon name="tabler:menu-2" />
         </button> 
-        <BrandTag class="font-bold">Al-Quran Online</BrandTag>
+        <p class="font-bold">Al-Quran Online</p>
         <button>
           <Icon name="tabler:moon" />
         </button>

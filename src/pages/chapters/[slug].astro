@@ -1,7 +1,9 @@
 ---
-import { getCollection } from 'astro:content'
+import { getCollection, getEntry } from 'astro:content'
+import { Icon } from 'astro-icon/components'
 import Default from '../../components/layouts/Default.astro'
 import VerseRow from '../../components/verse/VerseRow.astro'
+import BaseLink from '../../components/base/BaseLink.astro'
 
 export async function getStaticPaths() {
     const chapters = await getCollection('chapters')
@@ -14,6 +16,8 @@ export async function getStaticPaths() {
 
 const { chapter } = Astro.props
 const verses = await getCollection('verses', verse => verse.data.chapter.id === chapter.id)
+const prevChapter = chapter.id === '1' ? null : await getEntry('chapters', `${+chapter.id - 1}`)
+const nextChapter = chapter.id === '144' ? null : await getEntry('chapters', `${+chapter.id + 1}`)
 const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ'
 ---
 
@@ -31,7 +35,7 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
       </p>
     </div>
   </section>
-  <select id="select-ayat" class="w-full h-11 border-gray-300 rounded-md focus:ring-2 focus:ring-green-600 focus:border-green-600 lg:w-auto lg:ml-auto">
+  <select id="select-ayat" class="w-full h-11 border-neutral-300 rounded-md focus:ring-2 focus:ring-green-600 focus:border-green-600 lg:w-auto lg:ml-auto">
     <option disabled selected>Pilih Ayat</option>
     {verses.map(verse => <option value={verse.data.verse}>{verse.data.verse}</option>)}
   </select>
@@ -41,6 +45,16 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
     </div>}
     {verses.map(verse => <VerseRow verse={verse} />)}
   </article>
+  <nav class={`border-t border-neutral-300 py-6 flex items-center ${chapter.id === '1' ? 'justify-end' : 'justify-between'}`}>
+    {prevChapter && <BaseLink href={`/chapters/${prevChapter.data.slug}`} class="flex items-center gap-2" color="primary">
+      <Icon name="tabler:arrow-left" />
+      {prevChapter.data.latin} 
+    </BaseLink>}
+    {nextChapter && <BaseLink href={`/chapters/${nextChapter.data.slug}`} class="flex items-center gap-2" color="primary">
+      {nextChapter.data.latin} 
+      <Icon name="tabler:arrow-right" />
+    </BaseLink>}
+  </nav>
 </Default>
 
 <script>
