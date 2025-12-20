@@ -17,7 +17,7 @@ const withNavbar = Astro.url.pathname !== '/'
 		<title>Astro</title>
 	</head>
 	<body class="bg-gray-50 text-gray-800">
-    <nav class="bg-white h-16 shadow-sm border-b border-gray-50">
+    {withNavbar && <nav class="bg-white h-16 shadow-sm border-b border-gray-50">
       <BaseContainer class="h-full flex items-center justify-between">
         <a href="" class="flex items-center gap-2 text-emerald-600 font-bold">
           <Icon name="tabler:arrow-back-up" class="shrink-0 size-5" />
@@ -27,7 +27,7 @@ const withNavbar = Astro.url.pathname !== '/'
           <option selected disabled>Pilih Surah</option>
         </select>
       </BaseContainer>
-    </nav>
+    </nav>}
 
     <slot /> 
 

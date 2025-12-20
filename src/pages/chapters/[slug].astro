@@ -4,6 +4,7 @@ import { Icon } from 'astro-icon/components'
 import Default from '../../components/layouts/Default.astro'
 import VerseRow from '../../components/verse/VerseRow.astro'
 import BaseLink from '../../components/base/BaseLink.astro'
+import BaseContainer from '../../components/base/BaseContainer.astro'
 
 export async function getStaticPaths() {
     const chapters = await getCollection('chapters')
@@ -22,6 +23,21 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
 ---
 
 <Default>
+  <header class="py-10 bg-emerald-600 text-white">
+    <BaseContainer class="text-center space-y-4">
+      <div class="flex items-center justify-center gap-4">
+        <span class="bg-emerald-500 text-white uppercase h-6 px-3 rounded-full inline-flex items-center justify-center text-xs font-bold tracking-widest">{chapter.data.type}</span>
+        <span class="text-emerald-100">{chapter.data.translate}</span>
+      </div>
+      <h1 class="font-bold text-4xl">{chapter.data.latin}</h1>
+      <p dir="rtl" class="text-4xl">{chapter.data.name}</p>
+      <div class="flex items-center justify-center gap-4 text-emerald-100 text-sm">
+        <span>Surah ke: {chapter.id}</span>
+        <span class="w-1 h-1 rounded-full bg-emerald-100 inline-block"></span>
+        <span>Jumlah ayat: {chapter.data.verses}</span>
+      </div
+    </BaseContainer>
+  </header>
   <section class="text-center space-y-4 sm:flex sm:justify-between sm:items-center sm:text-left sm:space-y-0">
     <p dir="rtl" class="font-bold text-3xl text-green-700 sm:order-last lg:text-4xl">{chapter.data.name}</p>
     <div class="md:space-y-1 lg:space-y-2">
