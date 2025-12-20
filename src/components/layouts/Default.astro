@@ -4,6 +4,8 @@ import "../../styles/global.css"
 import 'tippy.js/dist/tippy.css';
 import { Icon } from 'astro-icon/components'
 import BaseContainer from '../base/BaseContainer.astro'
+
+const withNavbar = Astro.url.pathname !== '/'
 ---
 
 <html lang="en">
@@ -15,6 +17,18 @@ import BaseContainer from '../base/BaseContainer.astro'
 		<title>Astro</title>
 	</head>
 	<body class="bg-gray-50 text-gray-800">
+    <nav class="bg-white h-16 shadow-sm border-b border-gray-50">
+      <BaseContainer class="h-full flex items-center justify-between">
+        <a href="" class="flex items-center gap-2 text-emerald-600 font-bold">
+          <Icon name="tabler:arrow-back-up" class="shrink-0 size-5" />
+          Kembali
+        </a>
+        <select class="h-10 border-gray-300 rounded-lg transition focus:outline-0 focus:ring-4 focus:ring-emerald-400/30 focus:border-emerald-400">
+          <option selected disabled>Pilih Surah</option>
+        </select>
+      </BaseContainer>
+    </nav>
+
     <slot /> 
 
     <BaseContainer tag="footer" class="space-y-4 py-10">
