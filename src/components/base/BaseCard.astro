@@ -1,7 +1,7 @@
 ---
-const { tag: Tag = 'div', class: classes = '', ...props } = Astro.props
+const { tag: Tag = 'div', class: classes = '', variant = 'shadow', hoverable = false, focusable = false, ...props } = Astro.props
 ---
 
-<Tag {...props} class={`bg-white shadow-sm border border-gray-50 ${classes}`}>
+<Tag {...props} class={`bg-white ${variant === 'shadow' ? 'shadow-sm' : ''} border ${variant === 'shadow' ? 'border-gray-50' : 'border-gray-200'} ${hoverable ? 'hover:border-emerald-500' : ''} ${focusable ? 'focus:outline-0 focus:border-emerald-500' : ''} ${classes}`}>
 <slot />
 </Tag>
