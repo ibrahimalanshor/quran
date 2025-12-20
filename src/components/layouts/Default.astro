@@ -14,20 +14,19 @@ import BaseContainer from '../base/BaseContainer.astro'
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
 	</head>
-	<body class="text-neutral-900">
-    <nav class="h-14 border-b border-neutral-300 flex items-center">
-      <BaseContainer class="flex items-center justify-between">
-        <button class="md:hidden">
-          <Icon name="tabler:menu-2" />
-        </button> 
-        <p class="font-bold">Al-Quran Online</p>
-        <button>
-          <Icon name="tabler:moon" />
-        </button>
-      </BaseContainer>
-    </nav>
-    <BaseContainer tag="main" class="space-y-4 py-8 mx-auto md:py-10 lg:py-12">
-      <slot /> 
+	<body class="bg-gray-50 text-gray-800">
+    <slot /> 
+
+    <BaseContainer tag="footer" class="space-y-4 py-10">
+      <div class="flex items-center justify-center gap-6">
+        <a href="/about" class="text-sm font-medium text-gray-600 transition hover:text-emerald-600">Tentang Kami</a>
+        <span class="text-gray-300">|</span>
+        <a href="http://github.com/ibrahimalanshor/quran-web" class="text-sm font-medium text-gray-600 flex items-center gap-2 transition hover:text-emerald-600">
+          <Icon name="tabler:brand-github-filled" />
+          Source Code
+        </a>
+      </div>
+      <p class="text-sm text-gray-400 text-center">&copy; 2025 - Al-Quran Online</p>
     </BaseContainer>
 	</body>
 </html>

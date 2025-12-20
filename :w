@@ -38,10 +38,10 @@ const chapters = await getCollection('chapters')
   <BaseContainer tag="main" class="py-10 space-y-6">
     <h2 class="font-semibold text-xl border-l-4 border-emerald-500 pl-3">Daftar Surah</h2>
 
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {chapters.map(chapter => <a href={`/chapters/${chapter.data.slug}`} class="bg-white rounded-xl shadow-sm border border-gray-50 p-5 flex items-center justify-between trnsition hover:shadow-md hover:border-emerald-400 group">
+    <ol class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {chapters.map(chapter => <li class="bg-white rounded-xl shadow-sm border border-gray-50 p-5 flex items-center justify-between hover:shadow-md hover:border-emerald-500">
         <div class="flex items-center gap-4">
-          <div class="w-10 h-10 flex items-center justify-center bg-emerald-50 font-bold text-emerald-600 rounded-lg transition group-hover:bg-emerald-600 group-hover:text-white">{chapter.id}</div>
+          <div class="w-10 h-10 flex items-center justify-center bg-emerald-50 font-bold text-emerald-600 rounded-md">{chapter.id}</div>
           <div>
             <h3 class="font-bold">{chapter.data.latin}</h3>
             <p class="text-xs uppercase text-gray-500 tracking-wider">{chapter.data.verses} ayat</p>
@@ -49,8 +49,8 @@ const chapters = await getCollection('chapters')
         </div>
 
         <p dir="rtl" class="text-emerald-700 text-2xl font-bold">{chapter.data.name}</p>
-      </a>)}
-    </div>
+      </li>)}
+    </ol>
   </BaseContainer>
 </Default>
 
