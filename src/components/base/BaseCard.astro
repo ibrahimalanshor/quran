@@ -1,0 +1,7 @@
+---
+const { tag: Tag = 'div', class: classes = '', ...props } = Astro.props
+---
+
+<Tag {...props} class={`bg-white shadow-sm border border-gray-50 ${classes}`}>
+<slot />
+</Tag>

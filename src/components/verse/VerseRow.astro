@@ -1,5 +1,7 @@
 ---
 import { Icon } from "astro-icon/components"
+import BaseCard from "../base/BaseCard.astro"
+
 const { verse } = Astro.props
 
 function toArabicNum(str: string) : string {
@@ -9,25 +11,27 @@ function toArabicNum(str: string) : string {
 }
 ---
 
-<div id={verse.data.verse} class={`${verse.data.chapter.id === '1' || verse.data.chapter.id === '9' ? 'pt-2 pb-6' : 'py-6'} space-y-4`}>
-  <p dir="rtl" class="text-2xl leading-loose lg:text-3xl">
+<BaseCard id={verse.data.verse} class="p-6 rounded-2xl space-y-4">
+  <p dir="rtl" class="text-2xl sm:text-3xl leading-loose">
     <span class="verse-text">{verse.data.text}</span> 
-    <span class="mx-2 text-3xl lg:text-4xl text-yellow-800 font-bold">{toArabicNum(`${verse.data.verse}`)}</span>
+    <span class="mx-2 text-3xl lg:text-4xl text-amber-700 font-bold">{toArabicNum(`${verse.data.verse}`)}</span>
   </p>
   <div class="space-y-2">
-    <p class="leading-relaxed text-green-700">
+    <p class="leading-relaxed text-emerald-700">
       {verse.data.latin}
     </p>
-    <p class="leading-relaxed">
+    <p class="leading-relaxed text-gray-700">
       <span class="verse-translation">{verse.data.translation}</span> 
     </p>      
   </div>
-  <div class="flex gap-2 justify-end lg:justify-start">
-    <button class="cursor-pointer text-neutral-700 hover:text-green-700" title="Lihat Tafsir">
+  <div class="border-t border-gray-100 pt-4 flex gap-4 justify-end lg:justify-start">
+    <button class="cursor-pointer text-gray-500 flex items-center gap-2 text-sm transition hover:text-emerald-600">
       <Icon name="tabler:book" class="size-5" />
+      Tafsir
     </button>
-    <button class="copy-verse cursor-pointer text-neutral-700 hover:text-green-700" title="Salin Ayat" data-verse-number={verse.data.verse}>
+    <button class="copy-verse cursor-pointer text-gray-500 flex items-center gap-2 text-sm transition hover:text-emerald-600" data-verse-number={verse.data.verse}>
       <Icon name="tabler:copy" class="size-5" />
+      Salin
     </button>
   </div>
-</div>
+</BaseCard>
