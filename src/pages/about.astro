@@ -1,0 +1,65 @@
+---
+import Default from '../components/layouts/Default.astro'
+import BaseContainer from '../components/base/BaseContainer.astro'
+import BaseCard from '../components/base/BaseCard.astro'
+import { Icon } from 'astro-icon/components'
+---
+
+<Default>
+  <BaseContainer class="py-10 sm:max-w-screen-sm md:max-w-screen-md" constrained={false} tag="main">
+    <header class="space-y-4">
+      <h1 class="font-bold text-center text-3xl text-gray-900">Tentang Website Ini</h1>
+      <hr class="w-16 h-1 bg-emerald-500 mx-auto rounded-full border-0">
+    </header>
+    <div class="divide-y divide-gray-200">
+      <p class="text-gray-600 leading-relaxed text-justify py-8">Website ini adalah tempat untuk membaca Al-Quran secara online yang dapat diakses dengan cepat dan mudah. Website ini dapat diakses dengan baik di semua perangkat handphone, tablet, laptop maupun desktop.</p>
+      <section class="space-y-4 py-8">
+        <h2 class="text-sm uppercase text-emerald-600 font-bold tracking-widest">Sumber Data</h2>
+        <p class="text-gray-600 leading-relaxed text-justify">
+          Data surah, ayat dan tafsir diambil dari <a class="text-emerald-600 hover:underline" href="https://quran.kemenag.go.id/">Qur'an Kemenag</a>. Data yang diambil dapat diunduh di <a class="text-emerald-600 hover:underline" href="https://github.com/ibrahimalanshor/quran-data">Repository Quran Data</a> dalam bentuk csv.
+        </p>
+      </section>
+      <section class="space-y-4 py-8">
+        <h2 class="text-sm uppercase text-emerald-600 font-bold tracking-widest">Fitur Utama</h2>
+        <ul class="space-y-3">
+          <li class="text-gray-700 flex items-center gap-3">
+            <Icon name="tabler:check" class="size-5 text-emerald-500" />
+            Daftar Surah Lengkap
+          </li>
+          <li class="text-gray-700 flex items-center gap-3">
+            <Icon name="tabler:check" class="size-5 text-emerald-500" />
+            Baca Per Surah
+          </li>
+          <li class="text-gray-700 flex items-center gap-3">
+            <Icon name="tabler:check" class="size-5 text-emerald-500" />
+            Detail Ayat, Teks Latin, Terjemah, Catatan kaki dan Tafsir
+          </li>
+          <li class="text-gray-700 flex items-center gap-3">
+            <Icon name="tabler:check" class="size-5 text-emerald-500" />
+            Salin Ayat dan Tafsir
+          </li>
+          <li class="text-gray-700 flex items-center gap-3">
+            <Icon name="tabler:check" class="size-5 text-emerald-500" />
+            Navigasi Surah dan Ayat
+          </li>
+        </ul>
+      </section>
+      <BaseCard tag="section" class="mt-8 p-8 rounded-2xl flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
+        <div class="text-center space-y-1 sm:text-left">
+          <h2 class="text-sm uppercase text-emerald-600 font-bold tracking-widest">Creator</h2>
+          <p class="font-bold text-xl text-gray-900">Ibrahim Al-Anshor</p>
+          <p class="text-sm text-gray-500">Web Developer</p>
+        </div>
+        <a href="https://github.com/ibrahimalanshor/quran-web" class="flex bg-gray-900 text-white h-14 px-6 items-center justify-between gap-3 rounded-xl shadow-lg">
+          <div class="bg-white text-gray-900 w-6 h-6 rounded-full flex items-center justify-center">
+            <Icon name="tabler:brand-github-filled" class="size-5" />
+          </div>
+          <div>
+            <p class="text-[10px] uppercase font-bold text-gray-400">View Project On</p>
+            <p class="font-bold leading-none">Github Repository</p>
+          </div>
+        </a>
+      </BaseCard>
+    </div>
+  </BaseContainer>
+</Default>
