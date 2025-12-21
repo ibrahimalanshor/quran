@@ -1,10 +1,12 @@
 ---
-import { getCollection, CollectionEntry, getEntry } from 'astro:content'
+import { getCollection, getEntry } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
 import Default from '../../components/layouts/Default.astro'
 import BaseContainer from '../../components/base/BaseContainer.astro'
 import BaseCard from '../../components/base/BaseCard.astro'
 import VerseRow from '../../components/verse/VerseRow.astro'
 import { Icon } from 'astro-icon/components'
+import BasePagination from '../../components/base/BasePagination.astro'
 
 interface Props {
   chapter: CollectionEntry<'chapters'>
@@ -16,7 +18,7 @@ export async function getStaticPaths() {
   const verses = await getCollection('verses')
 
   return verses.map(verse => {
-    const chapter = chapters.find(chapter => chapter.id === verse.data.chapter.id)
+    const chapter = chapters.find(chapter => chapter.id === verse.data.chapter.id) as CollectionEntry<'chapters'>
 
     return {
       params: {
@@ -29,10 +31,14 @@ export async function getStaticPaths() {
 }
 
 const { verse, chapter } = Astro.props
-const tafsir = await getEntry('tafsir', verse.id)
+const tafsir = await getEntry('tafsir', verse.id)!
+const prevVerse = verse.id === '1' ? null : await getEntry('verses', `${+verse.id - 1}`)
+const nextVerse = verse.id === '6236' ? null : await getEntry('verses', `${+verse.id + 1}`)
+const prevChapter = !prevVerse ? null : await getEntry('chapters', prevVerse.data.chapter.id)
+const nextChapter = !nextVerse ? null : await getEntry('chapters', nextVerse.data.chapter.id)
 ---
 
-<Default>
+<Default backUrl={`/${chapter.data.slug}`}>
   <BaseContainer tag="main" class="py-10 space-y-8">
     <header class="text-center">
       <p dir="rtl" class="text-emerald-600 text-5xl mb-8">{chapter.data.name}</p>
@@ -51,5 +57,11 @@ const tafsir = await getEntry('tafsir', verse.id)
       </button>
       </div>
     </BaseCard>
+    <BasePagination
+      prevUrl={prevVerse ? `${prevChapter!.data.slug}/${prevVerse.data.verse}` : null}
+      prevName={prevVerse ? `${prevChapter!.data.latin}: ${prevVerse.data.verse}` : null}
+      nextUrl={nextVerse ? `${nextChapter!.data.slug}/${nextVerse.data.verse}` : null}
+      nextName={nextVerse ? `${nextChapter!.data.latin}: ${nextVerse.data.verse}` : null}
+    />
   </BaseContainer>
 </Default>

@@ -9,6 +9,8 @@ import BaseSelect from '../base/BaseSelect.astro'
 
 const withNavbar = Astro.url.pathname !== '/'
 const chapters = await getCollection('chapters')
+
+const { backUrl = '/' } = Astro.props
 ---
 
 <html lang="en">
@@ -22,7 +24,7 @@ const chapters = await getCollection('chapters')
 	<body class="bg-gray-50 text-gray-800">
     {withNavbar && <nav class="bg-white h-16 shadow-sm border-b border-gray-50">
       <BaseContainer class="h-full flex items-center justify-between">
-        <a href="/" class="flex items-center gap-2 text-emerald-600 font-bold hover:text-emerald-700">
+        <a href={backUrl} class="flex items-center gap-2 text-emerald-600 font-bold hover:text-emerald-700">
           <Icon name="tabler:arrow-back-up" class="shrink-0 size-5" />
           Kembali
         </a>

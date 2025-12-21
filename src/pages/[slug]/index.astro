@@ -1,14 +1,15 @@
 ---
-import { getCollection, getEntry, CollectionEntry } from 'astro:content'
+import { getCollection, getEntry } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
 import { Icon } from 'astro-icon/components'
 import Default from '../../components/layouts/Default.astro'
 import VerseRow from '../../components/verse/VerseRow.astro'
 import BaseContainer from '../../components/base/BaseContainer.astro'
 import BaseSelect from '../../components/base/BaseSelect.astro'
-import BaseCard from '../../components/base/BaseCard.astro'
+import BasePagination from '../../components/base/BasePagination.astro'
 
 interface Props {
-  chapter: CollectionEntry<'chapter'>
+  chapter: CollectionEntry<'chapters'>
 }
 
 export async function getStaticPaths() {
@@ -56,27 +57,15 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
       </div>
       {verses.map(verse => <VerseRow verse={verse} />)}
     </article>
-  </BaseContainer>
-  <BaseContainer>
-    <nav class={`border-t border-gray-200 py-12 flex items-center ${chapter.id === '1' ? 'justify-end' : 'justify-between'}`}>
-      {prevChapter && <BaseCard tag="a" hoverable focusable href={`/chapters/${prevChapter.data.slug}`} class="py-3 px-6 rounded-xl flex items-center justify-between gap-4 group hover:text-emerald-600" variant="border">
-        <Icon name="tabler:chevron-left" class="size-5" />
-        <div>
-          <p class="text-[10px] uppercase font-bold tracking-widest text-gray-400 group-hover:text-emerald-500">Sebelumnya</p>
-          <p class="font-semibold text-gray-700 group-hover:text-emerald-600">{prevChapter.data.latin}</p>
-        </div>
-      </BaseCard>}
-      {nextChapter && <BaseCard tag="a" hoverable focusable href={`/chapters/${nextChapter.data.slug}`} class="py-3 px-6 rounded-xl flex items-center justify-between gap-4 text-right group hover:text-emerald-600" variant="border">
-        <div>
-          <p class="text-[10px] uppercase font-bold tracking-widest text-gray-400 group-hover:text-emerald-500">Berikutnya</p>
-          <p class="font-semibold text-gray-700 group-hover:text-emerald-600">{nextChapter.data.latin}</p>
-        </div>
-        <Icon name="tabler:chevron-right" class="size-5" />
-      </BaseCard>}
-      <button id="go-up" class="fixed bottom-6 right-6 cursor-pointer transition bg-emerald-600 hover:bg-emerald-700 text-white w-12 h-12 rounded-full shadow-2xl flex items-center justify-center hidden focus:outline-0 focus:ring-4 focus:ring-emerald-400/30" title="Pergi ke Ayat Pertama">
-        <Icon name="tabler:arrow-narrow-up" class="size-6" />
-      </button>
-    </nav>
+    <BasePagination
+      prevUrl={prevChapter ? prevChapter.data.slug : null}
+      prevName={prevChapter ? prevChapter.data.latin : null}
+      nextUrl={nextChapter ? nextChapter.data.slug : null}
+      nextName={nextChapter ? nextChapter.data.latin : null}
+    />
+    <button id="go-up" class="fixed bottom-6 right-6 cursor-pointer transition bg-emerald-600 hover:bg-emerald-700 text-white w-12 h-12 rounded-full shadow-2xl flex items-center justify-center hidden focus:outline-0 focus:ring-4 focus:ring-emerald-400/30" title="Pergi ke Ayat Pertama">
+      <Icon name="tabler:arrow-narrow-up" class="size-6" />
+    </button>
   </BaseContainer>
 </Default>
 
