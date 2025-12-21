@@ -3,10 +3,12 @@ import '@fontsource/inter';
 import "../../styles/global.css"
 import 'tippy.js/dist/tippy.css';
 import { Icon } from 'astro-icon/components'
+import { getCollection } from 'astro:content'
 import BaseContainer from '../base/BaseContainer.astro'
 import BaseSelect from '../base/BaseSelect.astro'
 
 const withNavbar = Astro.url.pathname !== '/'
+const chapters = await getCollection('chapters')
 ---
 
 <html lang="en">
@@ -20,12 +22,13 @@ const withNavbar = Astro.url.pathname !== '/'
 	<body class="bg-gray-50 text-gray-800">
     {withNavbar && <nav class="bg-white h-16 shadow-sm border-b border-gray-50">
       <BaseContainer class="h-full flex items-center justify-between">
-        <a href="" class="flex items-center gap-2 text-emerald-600 font-bold">
+        <a href="/" class="flex items-center gap-2 text-emerald-600 font-bold hover:text-emerald-700">
           <Icon name="tabler:arrow-back-up" class="shrink-0 size-5" />
           Kembali
         </a>
-        <BaseSelect>
+        <BaseSelect id="chapter-select">
           <option selected disabled>Pilih Surah</option>
+          {chapters.map(chapter => <option selected={Astro.url.pathname === `/chapters/${chapter.data.slug}`} value={`/chapters/${chapter.data.slug}`}>{chapter.data.latin}</option>)}
         </BaseSelect>
       </BaseContainer>
     </nav>}
@@ -43,5 +46,13 @@ const withNavbar = Astro.url.pathname !== '/'
       </div>
       <p class="text-sm text-gray-400 text-center">&copy; 2025 - Al-Quran Online</p>
     </BaseContainer>
+
+    <script>
+      const chapterSelect = document.getElementById('chapter-select')
+
+      chapterSelect?.addEventListener('change', e => {
+        window.location.href = (e.target as HTMLSelectElement).value
+      })
+    </script>
 	</body>
 </html>
