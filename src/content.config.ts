@@ -3,13 +3,13 @@ import { file } from "astro/loaders";
 import { parse as parseCsv } from "csv-parse/sync";
 
 function verseParser(content: string) {
-  return parseCsv<{ id: string, ayah: string, arabic: string, latin: string, footnotes: string, translation: string, surah_id: string }>(content, { skip_empty_lines: true, columns: true })
+  return parseCsv<{ id: string, ayah: string, arabic: string, latin: string, footnotes: string | null, translation: string, surah_id: string }>(content, { skip_empty_lines: true, columns: true })
     .map(verse => ({
       id: verse.id,
       chapter: verse.surah_id,
       text: verse.arabic,
       latin: verse.latin,
-      footnotes: verse.footnotes,
+      footnotes: verse.footnotes === '' ? null : verse.footnotes,
       translation: verse.translation,
       verse: +verse.ayah
     }))
@@ -46,7 +46,7 @@ const verses = defineCollection({
     verse: z.number(),
     text: z.string(),
     latin: z.string(),
-    footnotes: z.string(),
+    footnotes: z.string().nullable(),
     translation: z.string()
   })
 })

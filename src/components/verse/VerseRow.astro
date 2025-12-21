@@ -5,13 +5,29 @@ import BaseLink from "../base/BaseLink.astro"
 
 const { verse, withTafsirButton = true } = Astro.props
 
-const chapter = await getEntry('chapters', verse.data.chapter.id)
-
 function toArabicNum(str: string) : string {
   const arabicNum = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩']
 
   return str.replace(/\d/gi, d => arabicNum[d])
 }
+function getFootnoteNumber(str: string) : string | null {
+  const found = str.split(/(\d+\))/).filter(Boolean)[0]
+
+  if (!found) {
+    return null
+  }
+
+  return found.slice(0, found.length - 1)
+}
+function getFootnoteText(str: string) : string | null {
+  return str.split(/(\d+\))/).filter(Boolean)[1]
+}
+
+const chapter = await getEntry('chapters', verse.data.chapter.id)
+const footnotes: string[] = verse.data.footnotes === null ? [] : verse.data.footnotes.split('\n')
+
+const translations: string[] = verse.data.translation.split(/(\d+\))/)
+  .filter(Boolean)
 ---
 
 <BaseCard id={verse.data.verse} class="p-6 rounded-2xl space-y-4">
@@ -23,10 +39,16 @@ function toArabicNum(str: string) : string {
     <p class="leading-relaxed text-emerald-700">
       {verse.data.latin}
     </p>
-    <p class="leading-relaxed text-gray-700">
-      <span class="verse-translation">{verse.data.translation}</span> 
+    <p class="verse-translation leading-relaxed text-gray-700">
+      {translations.map(text => /^\d+\)$/.test(text) ? <sup class="text-emerald-600 font-bold ml-0.5">{text.slice(0, text.length - 1)}</sup> : <span>{text}</span>)}
     </p>      
   </div>
+  {footnotes.length > 0 && <blockquote class="bg-gray-50 rounded-lg p-3 border-l-2 border-gray-300 text-xs text-gray-500 leading-relaxed space-y-1">
+    {footnotes.map(footnote => <p>
+      <span class="font-bold text-gray-700">{getFootnoteNumber(footnote)}. </span>
+      {getFootnoteText(footnote)}
+    </p>)}
+  </blockquote>}
   <div class="border-t border-gray-100 pt-4 flex gap-4 justify-end lg:justify-start">
     {withTafsirButton && chapter && <BaseLink tag="a" href={`/${chapter.data.slug}/${verse.data.verse}`} icon="tabler:book">Tafsir</BaseLink>}
     <BaseLink class="copy-verse" data-verse-number={verse.data.verse} icon="tabler:copy">Salin</BaseLink>
