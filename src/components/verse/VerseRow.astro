@@ -1,8 +1,11 @@
 ---
 import { Icon } from "astro-icon/components"
+import { getEntry } from "astro:content"
 import BaseCard from "../base/BaseCard.astro"
 
-const { verse } = Astro.props
+const { verse, withTafsirButton = true } = Astro.props
+
+const chapter = await getEntry('chapters', verse.data.chapter.id)
 
 function toArabicNum(str: string) : string {
   const arabicNum = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩']
@@ -25,10 +28,10 @@ function toArabicNum(str: string) : string {
     </p>      
   </div>
   <div class="border-t border-gray-100 pt-4 flex gap-4 justify-end lg:justify-start">
-    <button class="cursor-pointer text-gray-500 flex items-center gap-2 text-sm transition hover:text-emerald-600">
+    {withTafsirButton && chapter && <a href={`/${chapter.data.slug}/${verse.data.verse}`} class="cursor-pointer text-gray-500 flex items-center gap-2 text-sm transition hover:text-emerald-600">
       <Icon name="tabler:book" class="size-5" />
       Tafsir
-    </button>
+    </a>}
     <button class="copy-verse cursor-pointer text-gray-500 flex items-center gap-2 text-sm transition hover:text-emerald-600" data-verse-number={verse.data.verse}>
       <Icon name="tabler:copy" class="size-5" />
       Salin

@@ -15,6 +15,16 @@ function verseParser(content: string) {
     }))
 }
 
+function tafsirParser(content: string) {
+  return parseCsv<{ id: string, ayah: string, 'tafsir.wajiz': string, surah_id: string }>(content, { skip_empty_lines: true, columns: true })
+    .map(verse => ({
+      id: verse.id,
+      chapter: verse.surah_id,
+      text: verse['tafsir.wajiz'],
+      verse: verse.ayah
+    }))
+}
+
 function chapterParser(content: string) {
   return parseCsv<{ id: number, transliteration: string, num_ayah: number, page: number, arabic: string, translation: string, location: string }>(content, { columns: true })
     .map(chapter => ({
@@ -41,6 +51,15 @@ const verses = defineCollection({
   })
 })
 
+const tafsir = defineCollection({
+  loader: file('src/data/tafsir.csv', { parser: tafsirParser }),
+  schema: z.object({
+    chapter: reference('chapters'),
+    verse: reference('verses'),
+    text: z.string(),
+  })
+})
+
 const chapters = defineCollection({
   loader: file('src/data/chapters.csv', { parser: chapterParser }),
   schema: z.object({
@@ -54,4 +73,4 @@ const chapters = defineCollection({
   })
 })
 
-export const collections = { verses, chapters }
+export const collections = { verses, chapters, tafsir }

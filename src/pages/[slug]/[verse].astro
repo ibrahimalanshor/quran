@@ -1,0 +1,55 @@
+---
+import { getCollection, CollectionEntry, getEntry } from 'astro:content'
+import Default from '../../components/layouts/Default.astro'
+import BaseContainer from '../../components/base/BaseContainer.astro'
+import BaseCard from '../../components/base/BaseCard.astro'
+import VerseRow from '../../components/verse/VerseRow.astro'
+import { Icon } from 'astro-icon/components'
+
+interface Props {
+  chapter: CollectionEntry<'chapters'>
+  verse: CollectionEntry<'verses'>
+}
+
+export async function getStaticPaths() {
+  const chapters = await getCollection('chapters') 
+  const verses = await getCollection('verses')
+
+  return verses.map(verse => {
+    const chapter = chapters.find(chapter => chapter.id === verse.data.chapter.id)
+
+    return {
+      params: {
+        slug: chapter.data.slug,
+        verse: verse.data.verse
+      },
+      props: { verse, chapter }
+    }
+  })
+}
+
+const { verse, chapter } = Astro.props
+const tafsir = await getEntry('tafsir', verse.id)
+---
+
+<Default>
+  <BaseContainer tag="main" class="py-10 space-y-8">
+    <header class="text-center">
+      <p dir="rtl" class="text-emerald-600 text-5xl mb-8">{chapter.data.name}</p>
+      <h1 class="font-bold text-3xl text-gray-900 mb-4">{chapter.data.latin}</h1>
+      <p class="text-gray-500 text-lg mb-4">Ayat {verse.data.verse}</p>
+      <hr class="w-16 h-1 bg-emerald-500 mx-auto rounded-full border-0">
+    </header>
+    <VerseRow verse={verse} withTafsirButton={false} />
+    <BaseCard class="p-6 rounded-2xl space-y-4">
+      <h2 class="font-bold text-xl text-gray-900">Tafsir Ringkas Kemenag</h2>
+      <p class="leading-relaxed text-gray-700">{tafsir.data.text}</p>
+      <div class="border-t border-gray-100 pt-4 flex gap-4 justify-end lg:justify-start">
+        <button class="cursor-pointer text-gray-500 flex items-center gap-2 text-sm transition hover:text-emerald-600">
+          <Icon name="tabler:copy" class="size-5" />
+          Salin
+      </button>
+      </div>
+    </BaseCard>
+  </BaseContainer>
+</Default>

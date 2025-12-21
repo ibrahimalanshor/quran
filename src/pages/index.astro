@@ -27,7 +27,7 @@ const chapters = await getCollection('chapters')
     <p id="search-not-found-message" class="text-gray-400 hidden">Pencarian surah tidak ditemukan</p>
 
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {chapters.map(chapter => <BaseCard tag="a" href={`/chapters/${chapter.data.slug}`} data-chapter={chapter.data.latin} hoverable focusable class="rounded-xl p-5 flex items-center justify-between transition hover:shadow-md focus:shadow-md group">
+      {chapters.map(chapter => <BaseCard tag="a" href={`/${chapter.data.slug}`} data-chapter={chapter.data.latin} hoverable focusable class="rounded-xl p-5 flex items-center justify-between transition hover:shadow-md focus:shadow-md group">
         <div class="flex items-center gap-4">
           <div class="w-10 h-10 flex items-center justify-center bg-emerald-50 font-bold text-emerald-600 rounded-lg transition group-hover:bg-emerald-600 group-hover:text-white group-focus:bg-emerald-600 group-focus:text-white">{chapter.id}</div>
           <div>

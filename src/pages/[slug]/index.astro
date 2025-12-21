@@ -1,20 +1,23 @@
 ---
-import { getCollection, getEntry } from 'astro:content'
+import { getCollection, getEntry, CollectionEntry } from 'astro:content'
 import { Icon } from 'astro-icon/components'
 import Default from '../../components/layouts/Default.astro'
 import VerseRow from '../../components/verse/VerseRow.astro'
-import BaseLink from '../../components/base/BaseLink.astro'
 import BaseContainer from '../../components/base/BaseContainer.astro'
 import BaseSelect from '../../components/base/BaseSelect.astro'
 import BaseCard from '../../components/base/BaseCard.astro'
 
-export async function getStaticPaths() {
-    const chapters = await getCollection('chapters')
+interface Props {
+  chapter: CollectionEntry<'chapter'>
+}
 
-    return chapters.map(chapter => ({
-        params: { slug: chapter.data.slug },
-        props: { chapter }
-    }))
+export async function getStaticPaths() {
+  const chapters = await getCollection('chapters')
+
+  return chapters.map(chapter => ({
+    params: { slug: chapter.data.slug },
+    props: { chapter }
+  }))
 }
 
 const { chapter } = Astro.props

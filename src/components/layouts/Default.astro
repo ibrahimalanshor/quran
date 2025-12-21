@@ -28,7 +28,7 @@ const chapters = await getCollection('chapters')
         </a>
         <BaseSelect id="chapter-select">
           <option selected disabled>Pilih Surah</option>
-          {chapters.map(chapter => <option selected={Astro.url.pathname === `/chapters/${chapter.data.slug}`} value={`/chapters/${chapter.data.slug}`}>{chapter.data.latin}</option>)}
+          {chapters.map(chapter => <option selected={Astro.url.pathname === `/${chapter.data.slug}`} value={`/${chapter.data.slug}`}>{chapter.data.latin}</option>)}
         </BaseSelect>
       </BaseContainer>
     </nav>}
