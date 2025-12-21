@@ -1,19 +1,10 @@
 ---
-interface Props {
-  href: string
-  color?: 'dark' | 'primary'
-  class?: string
-  [key: string]: any
-}
+import { Icon } from 'astro-icon/components'
 
-const { href, color = 'dark', class: classes = '', ...props } = Astro.props
-
-const colorClass = {
-  dark: 'text-neutral-900',
-  primary: 'text-green-700 hover:text-green-800'
-}[color]
+const { tag: Tag = 'button', class: classes = '', icon, ...props } = Astro.props
 ---
 
-<a {...props} href={href} class={`hover:underline ${classes} ${colorClass}`}>
+<Tag { ...props } class={`cursor-pointer text-gray-500 flex items-center gap-2 text-sm transition hover:text-emerald-600 ${classes}`}>
+  {icon && <Icon name={icon} class="size-5" />}
   <slot />
-</a>
+</Tag>

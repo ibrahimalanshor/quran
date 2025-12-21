@@ -29,6 +29,8 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
 ---
 
 <Default>
+  <meta name="quran-chapter" content={chapter.data.latin} slot="meta" />
+
   <header class="py-10 bg-emerald-600 text-white">
     <BaseContainer class="text-center space-y-4">
       <div class="flex items-center justify-center gap-4">
@@ -70,8 +72,6 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
 </Default>
 
 <script>
-import tippy from 'tippy.js'
-
 document.querySelector('#select-ayat')!
   .addEventListener('change', e => {
     const value = (e.target as HTMLSelectElement).value
@@ -82,32 +82,6 @@ document.querySelector('#select-ayat')!
       ayatEl.scrollIntoView({ behavior: 'smooth' })
     }
   })
-
-const copyVersesBtn = tippy('.copy-verse', {
-  trigger: 'manual'
-})
-
-const chapterName = document.querySelector('h1')!.textContent
-
-copyVersesBtn.forEach(btn => {
-  btn.reference.addEventListener('click', async () => {
-    const verseNumber = (btn.reference as HTMLButtonElement).dataset.verseNumber as string
-    const title = `Q.S ${chapterName}: ${verseNumber}`
-    const text = document.getElementById(verseNumber)!
-      .querySelector(`.verse-text`)!
-      .textContent
-    const translation = document.getElementById(verseNumber)!
-      .querySelector(`.verse-translation`)!
-      .textContent
-
-    const content = `${title}\n${text}\n${translation}`
-
-    await navigator.clipboard.writeText(content)
-
-    btn.setContent('Ayat berhasil disalin!')
-    btn.show()
-  })
-})
 
 const firstVerse = document.getElementById('1') as HTMLDivElement
 const goUpBtn = document.querySelector('#go-up') as HTMLButtonElement

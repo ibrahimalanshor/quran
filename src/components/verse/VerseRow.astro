@@ -1,7 +1,7 @@
 ---
-import { Icon } from "astro-icon/components"
 import { getEntry } from "astro:content"
 import BaseCard from "../base/BaseCard.astro"
+import BaseLink from "../base/BaseLink.astro"
 
 const { verse, withTafsirButton = true } = Astro.props
 
@@ -28,13 +28,37 @@ function toArabicNum(str: string) : string {
     </p>      
   </div>
   <div class="border-t border-gray-100 pt-4 flex gap-4 justify-end lg:justify-start">
-    {withTafsirButton && chapter && <a href={`/${chapter.data.slug}/${verse.data.verse}`} class="cursor-pointer text-gray-500 flex items-center gap-2 text-sm transition hover:text-emerald-600">
-      <Icon name="tabler:book" class="size-5" />
-      Tafsir
-    </a>}
-    <button class="copy-verse cursor-pointer text-gray-500 flex items-center gap-2 text-sm transition hover:text-emerald-600" data-verse-number={verse.data.verse}>
-      <Icon name="tabler:copy" class="size-5" />
-      Salin
-    </button>
+    {withTafsirButton && chapter && <BaseLink tag="a" href={`/${chapter.data.slug}/${verse.data.verse}`} icon="tabler:book">Tafsir</BaseLink>}
+    <BaseLink class="copy-verse" data-verse-number={verse.data.verse} icon="tabler:copy">Salin</BaseLink>
   </div>
 </BaseCard>
+
+<script>
+import tippy from 'tippy.js'
+
+const copyVersesBtn = tippy('.copy-verse', {
+  trigger: 'manual'
+})
+
+const chapterName = (document.querySelector('meta[name=quran-chapter]') as HTMLMetaElement)!.content
+
+copyVersesBtn.forEach(btn => {
+  btn.reference.addEventListener('click', async () => {
+    const verseNumber = (btn.reference as HTMLButtonElement).dataset.verseNumber as string
+    const title = `Q.S ${chapterName}: ${verseNumber}`
+    const text = document.getElementById(verseNumber)!
+      .querySelector(`.verse-text`)!
+      .textContent
+    const translation = document.getElementById(verseNumber)!
+      .querySelector(`.verse-translation`)!
+      .textContent
+
+    const content = `${title}\n${text}\n${translation}`
+
+    await navigator.clipboard.writeText(content)
+
+    btn.setContent('Ayat berhasil disalin!')
+    btn.show()
+  })
+})
+</script>
