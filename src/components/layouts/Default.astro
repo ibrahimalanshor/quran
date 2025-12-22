@@ -6,21 +6,57 @@ import { Icon } from 'astro-icon/components'
 import { getCollection } from 'astro:content'
 import BaseContainer from '../base/BaseContainer.astro'
 import BaseSelect from '../base/BaseSelect.astro'
+import { SEO } from "astro-seo";
 
-const withNavbar = Astro.url.pathname !== '/'
+const base = import.meta.env.BASE_URL
+const withNavbar = Astro.url.pathname !== base + '/'
 const chapters = await getCollection('chapters')
 
-const { backUrl = '/' } = Astro.props
+const { title, description, seo, backUrl = base } = Astro.props
+
+const meta = {
+  title,
+  description,
+  image: new URL(base + '/banner.jpg', Astro.url.origin).href
+}
+const account = {
+  twitter: '@ibrahiminx'
+}
 ---
 
 <html lang="en">
 	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
+    <SEO
+      charset='utf-8'
+      title={meta.title}
+      description={meta.description}
+      openGraph={{
+        basic: {
+          title: meta.title,
+          type: "website",
+          image: meta.image,
+        },
+        optional: {
+          description: meta.description
+        }
+      }}
+      twitter={{
+        card: 'summary_large_image',
+        creator: account.twitter,
+        title: meta.title,
+        image: meta.image,
+        description: meta.description
+      }}
+      {...seo}
+    />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
     <slot name="meta" />
-		<title>Astro</title>
+    <link rel="apple-touch-icon" sizes="180x180" href={`${base}/favicon/apple-touch-icon.png`}>
+    <link rel="icon" type="image/png" sizes="32x32" href={`${base}/favicon/favicon-32x32.png`}>
+    <link rel="icon" type="image/png" sizes="16x16" href={`${base}/favicon/favicon-16x16.png`}>
+    <link rel="manifest" href={`${base}/favicon/site.webmanifest`}>
+    <link rel="sitemap" href={`${base}/sitemap-index.xml`}/>
 	</head>
 	<body class="bg-gray-50 text-gray-800">
     {withNavbar && <nav class="bg-white h-16 shadow-sm border-b border-gray-50">
@@ -29,9 +65,9 @@ const { backUrl = '/' } = Astro.props
           <Icon name="tabler:arrow-back-up" class="shrink-0 size-5" />
           Kembali
         </a>
-        <BaseSelect id="chapter-select">
+        <BaseSelect aria-label="Pilih Surah" id="chapter-select">
           <option selected disabled>Pilih Surah</option>
-          {chapters.map(chapter => <option selected={Astro.url.pathname === `/${chapter.data.slug}`} value={`/${chapter.data.slug}`}>{chapter.data.latin}</option>)}
+          {chapters.map(chapter => <option selected={Astro.url.pathname === `${base}/${chapter.data.slug}`} value={`${base}/${chapter.data.slug}`}>{chapter.data.latin}</link>)}
         </BaseSelect>
       </BaseContainer>
     </nav>}
@@ -40,7 +76,7 @@ const { backUrl = '/' } = Astro.props
 
     <BaseContainer tag="footer" class="space-y-4 py-10">
       <div class="flex items-center justify-center gap-6">
-        <a href="/about" class="text-sm font-medium text-gray-600 transition hover:text-emerald-600">Tentang Website</a>
+        <a href={`${base}/about`} class="text-sm font-medium text-gray-600 transition hover:text-emerald-600">Tentang Website</a>
         <span class="text-gray-300">|</span>
         <a href="http://github.com/ibrahimalanshor/quran-web" class="text-sm font-medium text-gray-600 flex items-center gap-2 transition hover:text-emerald-600">
           <Icon name="tabler:brand-github-filled" />

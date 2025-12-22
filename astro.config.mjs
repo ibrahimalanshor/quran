@@ -4,11 +4,14 @@ import tailwindcss from "@tailwindcss/vite";
 
 import icon from "astro-icon";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-
-  integrations: [icon()],
+  site: 'https://ibrahimalanshor.github.io/quran',
+  base: '/quran',
+  integrations: [icon(), sitemap()],
 });

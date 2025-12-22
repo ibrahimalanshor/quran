@@ -31,6 +31,7 @@ export async function getStaticPaths() {
 }
 
 const { verse, chapter } = Astro.props
+const base = import.meta.env.BASE_URL
 const tafsir = await getEntry('tafsir', verse.id)!
 const prevVerse = verse.id === '1' ? null : await getEntry('verses', `${+verse.id - 1}`)
 const nextVerse = verse.id === '6236' ? null : await getEntry('verses', `${+verse.id + 1}`)
@@ -38,7 +39,7 @@ const prevChapter = !prevVerse ? null : await getEntry('chapters', prevVerse.dat
 const nextChapter = !nextVerse ? null : await getEntry('chapters', nextVerse.data.chapter.id)
 ---
 
-<Default backUrl={`/${chapter.data.slug}`}>
+<Default backUrl={`${base}/${chapter.data.slug}`} title={`Surah ${chapter.data.latin} Ayat ${verse.data.verse}: Arab, Terjemahan, dan Tafsir`} description={`Baca surah ${chapter.data.latin} Ayat ${verse.data.verse} beserta terjemahan dan tafsir dalam Bahasa Indonesia`}>
   <meta name="quran-chapter" content={chapter.data.latin} slot="meta" />
 
   <BaseContainer tag="main" class="py-10 space-y-8">

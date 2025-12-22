@@ -5,10 +5,11 @@ import Default from '../components/layouts/Default.astro'
 import BaseContainer from '../components/base/BaseContainer.astro'
 import BaseCard from '../components/base/BaseCard.astro'
 
+const base = import.meta.env.BASE_URL
 const chapters = await getCollection('chapters')
 ---
 
-<Default>
+<Default title="Al-Quran Online Terjemahan dan Tafsir Bahasa Indonesia" description="Baca Al-Quran Digital Online dengan terjemahan dan tafsir dalam Bahasa Indonesia Lengkap 30 Juz">
   <header class="bg-emerald-600 text-white h-52 flex flex-col items-center justify-center text-center shadow-lg">
     <div class="px-4 w-full space-y-6">
       <h1 class="font-bold text-4xl">Al-Quran Online</h1>
@@ -27,7 +28,7 @@ const chapters = await getCollection('chapters')
     <p id="search-not-found-message" class="text-gray-400 hidden">Pencarian surah tidak ditemukan</p>
 
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {chapters.map(chapter => <BaseCard tag="a" href={`/${chapter.data.slug}`} data-chapter={chapter.data.latin} hoverable focusable class="rounded-xl p-5 flex items-center justify-between transition hover:shadow-md focus:shadow-md group">
+      {chapters.map(chapter => <BaseCard tag="a" href={`${base}/${chapter.data.slug}`} data-chapter={chapter.data.latin} hoverable focusable class="rounded-xl p-5 flex items-center justify-between transition hover:shadow-md focus:shadow-md group">
         <div class="flex items-center gap-4">
           <div class="w-10 h-10 flex items-center justify-center bg-emerald-50 font-bold text-emerald-600 rounded-lg transition group-hover:bg-emerald-600 group-hover:text-white group-focus:bg-emerald-600 group-focus:text-white">{chapter.id}</div>
           <div>
