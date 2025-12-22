@@ -9,10 +9,9 @@ import BaseSelect from '../base/BaseSelect.astro'
 import { SEO } from "astro-seo";
 
 const base = import.meta.env.BASE_URL
-const withNavbar = Astro.url.pathname !== base + '/'
 const chapters = await getCollection('chapters')
 
-const { title, description, seo, backUrl = base } = Astro.props
+const { title, description, seo, backUrl = base, withNavbar = true } = Astro.props
 
 const meta = {
   title,
