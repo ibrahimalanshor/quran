@@ -1,43 +1,15 @@
-# Astro Starter Kit: Minimal
+# Qur'an
 
-```sh
-npm create astro@latest -- --template minimal
-```
+![Shot](./shot.png)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Website untuk baca Al-Qur'an online, lengkap 30 juz, arab, latin, terjemah dan tafsir ringkas. Cek di [https://ibrahimalanshor.github.io/quran](https://ibrahimalanshor.github.io/quran).
 
-## 🚀 Project Structure
+Sumber data : [Qur'an Kemenag](https://quran.kemenag.go.id/). Data dapat diunduh di [Repository Quran Data](https://github.com/ibrahimalanshor/quran-data) dalam bentuk `.csv`.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Fitur
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- Daftar Surah Lengkap
+- Baca Per Surah
+- Detail Ayat, Teks Latin, Terjemah, Catatan kaki dan Tafsir
+- Salin Ayat dan Tafsir
+- Navigasi Surah dan Ayat
