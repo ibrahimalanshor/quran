@@ -11,7 +11,7 @@ import { SEO } from "astro-seo";
 const base = import.meta.env.BASE_URL
 const chapters = await getCollection('chapters')
 
-const { title, description, seo, backUrl = base, withNavbar = true } = Astro.props
+const { title, description, seo, backUrl = base, withNavbar = true, navbarSticky = false } = Astro.props
 
 const meta = {
   title,
@@ -58,7 +58,7 @@ const account = {
     <link rel="sitemap" href={`${base}/sitemap-index.xml`}/>
 	</head>
 	<body class="bg-gray-50 text-gray-800">
-    {withNavbar && <nav class="bg-white h-16 shadow-sm border-b border-gray-50">
+    {withNavbar && <nav class={`bg-white h-16 shadow-sm border-b border-gray-50 ${navbarSticky ? 'sticky top-0 left-0 z-10 md:static' : ''}`}>
       <BaseContainer class="h-full flex items-center justify-between">
         <a href={backUrl} class="flex items-center gap-2 text-emerald-600 font-bold hover:text-emerald-700">
           <Icon name="tabler:arrow-back-up" class="shrink-0 size-5" />

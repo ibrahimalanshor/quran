@@ -28,7 +28,7 @@ const nextChapter = chapter.id === '144' ? null : await getEntry('chapters', `${
 const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ'
 ---
 
-<Default title={`Surah ${chapter.data.latin}: Arab dan Terjemahan`} description={`"Surah ${chapter.data.latin} adalah surah no ${chapter.id} dalam Al-Quran yang terdiri dari ${chapter.data.verses} ayat`}>
+<Default navbarSticky title={`Surah ${chapter.data.latin}: Arab dan Terjemahan`} description={`"Surah ${chapter.data.latin} adalah surah no ${chapter.id} dalam Al-Quran yang terdiri dari ${chapter.data.verses} ayat`}>
   <meta name="quran-chapter" content={chapter.data.latin} slot="meta" />
 
   <header class="py-10 bg-emerald-600 text-white">
