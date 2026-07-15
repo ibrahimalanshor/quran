@@ -11,7 +11,7 @@ import { SEO } from "astro-seo";
 const base = import.meta.env.BASE_URL
 const chapters = await getCollection('chapters')
 
-const { title, description, seo, backUrl = base, withNavbar = true, navbarSticky = false } = Astro.props
+const { title, description, seo, backUrl = base, withNavbar = true, navbarSticky = false, verseLength = null } = Astro.props
 
 const meta = {
   title,
@@ -58,16 +58,22 @@ const account = {
     <link rel="sitemap" href={`${base}/sitemap-index.xml`}/>
 	</head>
 	<body class="bg-gray-50 text-gray-800">
-    {withNavbar && <nav class={`bg-white h-16 shadow-sm border-b border-gray-50 ${navbarSticky ? 'sticky top-0 left-0 z-10 md:static' : ''}`}>
-      <BaseContainer class="h-full flex items-center justify-between">
+    {withNavbar && <nav class={`bg-white h-16 shadow-sm border-b border-gray-50 ${navbarSticky ? 'sticky top-0 left-0 z-10' : ''}`}>
+      <BaseContainer class="h-full flex items-center justify-between gap-2">
         <a href={backUrl} class="flex items-center gap-2 text-emerald-600 font-bold hover:text-emerald-700">
           <Icon name="tabler:arrow-back-up" class="shrink-0 size-5" />
-          Kembali
+          <span class="hidden sm:block">Kembali</span>
         </a>
-        <BaseSelect aria-label="Pilih Surah" id="chapter-select">
-          <option selected disabled>Pilih Surah</option>
-          {chapters.map(chapter => <option selected={Astro.url.pathname === `${base}/${chapter.data.slug}`} value={`${base}/${chapter.data.slug}`}>{chapter.data.latin}</link>)}
-        </BaseSelect>
+        <div class="flex items-center gap-2">
+          <BaseSelect aria-label="Pilih Surah" id="chapter-select">
+            <option selected disabled>Pilih Surah</option>
+            {chapters.map(chapter => <option selected={Astro.url.pathname === `${base}/${chapter.data.slug}`} value={`${base}/${chapter.data.slug}`}>{chapter.id}. {chapter.data.latin}</link>)}
+          </BaseSelect>
+          {verseLength && <BaseSelect aria-label="Loncat ke Ayat" class="select-ayat">
+            <option selected disabled>Ayat</option>
+            {Array.from({ length: verseLength }, (_, i) => i + 1).map(verse => <option value={verse}>Ayat {verse}</link>)}
+          </BaseSelect>}
+        </div>
       </BaseContainer>
     </nav>}
 
@@ -91,6 +97,19 @@ const account = {
       chapterSelect?.addEventListener('change', e => {
         window.location.href = (e.target as HTMLSelectElement).value
       })
+
+      document.querySelectorAll('.select-ayat')
+        .forEach(select => {
+          select.addEventListener('change', e => {
+            const value = (e.target as HTMLSelectElement).value
+
+            const ayatEl = document.getElementById(value)
+
+            if (ayatEl) {
+              ayatEl.scrollIntoView({ behavior: 'smooth' })
+            }
+          })
+        })
     </script>
 	</body>
 </html>
