@@ -28,7 +28,7 @@ const nextChapter = chapter.id === '144' ? null : await getEntry('chapters', `${
 const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ'
 ---
 
-<Default title={`Surah ${chapter.data.latin}: Arab dan Terjemahan`} description={`"Surah ${chapter.data.latin} adalah surah no ${chapter.id} dalam Al-Quran yang terdiri dari ${chapter.data.verses} ayat`}>
+<Default navbarSticky title={`Surah ${chapter.data.latin}: Arab dan Terjemahan`} verseLength={verses.length} description={`"Surah ${chapter.data.latin} adalah surah no ${chapter.id} dalam Al-Quran yang terdiri dari ${chapter.data.verses} ayat`}>
   <meta name="quran-chapter" content={chapter.data.latin} slot="meta" />
 
   <header class="py-10 bg-emerald-600 text-white">
@@ -43,13 +43,13 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
         <span>Surah ke: {chapter.id}</span>
         <span class="w-1 h-1 rounded-full bg-emerald-100 inline-block"></span>
         <span>Jumlah ayat: {chapter.data.verses}</span>
-      </div
+      </div>
     </BaseContainer>
   </header>
   <BaseContainer tag="main" class="py-8 space-y-6">
     <article class="space-y-6">
       <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-        <BaseSelect id="select-ayat" aria-label="Loncat ke Ayat" class="w-full sm:w-auto">
+        <BaseSelect aria-label="Loncat ke Ayat" class="select-ayat w-full sm:w-auto">
           <option disabled selected>Loncat ke Ayat</option>
           {verses.map(verse => <option value={verse.data.verse}>Ayat {verse.data.verse}</option>)}
         </BaseSelect>
@@ -72,17 +72,6 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
 </Default>
 
 <script>
-document.querySelector('#select-ayat')!
-  .addEventListener('change', e => {
-    const value = (e.target as HTMLSelectElement).value
-
-    const ayatEl = document.getElementById(value)
-
-    if (ayatEl) {
-      ayatEl.scrollIntoView({ behavior: 'smooth' })
-    }
-  })
-
 const firstVerse = document.getElementById('1') as HTMLDivElement
 const goUpBtn = document.querySelector('#go-up') as HTMLButtonElement
 const goUpObserver = new IntersectionObserver(([entry]) => entry.isIntersecting ? goUpBtn.classList.add('hidden') : goUpBtn.classList.remove('hidden'), { threshold: 0 })
