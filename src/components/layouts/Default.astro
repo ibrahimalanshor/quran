@@ -57,39 +57,43 @@ const account = {
     <link rel="manifest" href={`${base}/favicon/site.webmanifest`}>
     <link rel="sitemap" href={`${base}/sitemap-index.xml`}/>
 	</head>
-	<body class="bg-gray-50 text-gray-800">
-    {withNavbar && <nav class={`bg-white h-16 shadow-sm border-b border-gray-50 ${navbarSticky ? 'sticky top-0 left-0 z-10' : ''}`}>
-      <BaseContainer class="h-full flex items-center justify-between gap-2">
-        <a href={backUrl} class="flex items-center gap-2 text-emerald-600 font-bold hover:text-emerald-700">
-          <Icon name="tabler:arrow-back-up" class="shrink-0 size-5" />
-          <span class="hidden sm:block">Kembali</span>
-        </a>
-        <div class="flex items-center gap-2">
-          <BaseSelect aria-label="Pilih Surah" id="chapter-select">
-            <option selected disabled>Pilih Surah</option>
-            {chapters.map(chapter => <option selected={Astro.url.pathname === `${base}/${chapter.data.slug}`} value={`${base}/${chapter.data.slug}`}>{chapter.id}. {chapter.data.latin}</link>)}
-          </BaseSelect>
-          {verseLength && <BaseSelect aria-label="Loncat ke Ayat" class="select-ayat">
-            <option selected disabled>Ayat</option>
-            {Array.from({ length: verseLength }, (_, i) => i + 1).map(verse => <option value={verse}>Ayat {verse}</link>)}
-          </BaseSelect>}
+	<body class="bg-white min-h-screen flex flex-col justify-between">
+    <div class="grow">
+      {withNavbar && <nav class={`bg-white h-16 shadow-sm border-b border-gray-50 ${navbarSticky ? 'sticky top-0 left-0 z-10' : ''}`}>
+        <BaseContainer class="h-full flex items-center justify-between gap-2">
+          <a href={backUrl} class="flex items-center gap-2 text-emerald-600 font-bold hover:text-emerald-700">
+            <Icon name="tabler:arrow-back-up" class="shrink-0 size-5" />
+            <span class="hidden sm:block">Kembali</span>
+          </a>
+          <div class="flex items-center gap-2">
+            <BaseSelect aria-label="Pilih Surah" id="chapter-select">
+              <option selected disabled>Pilih Surah</option>
+              {chapters.map(chapter => <option selected={Astro.url.pathname === `${base}/${chapter.data.slug}`} value={`${base}/${chapter.data.slug}`}>{chapter.id}. {chapter.data.latin}</link>)}
+            </BaseSelect>
+            {verseLength && <BaseSelect aria-label="Loncat ke Ayat" class="select-ayat">
+              <option selected disabled>Ayat</option>
+              {Array.from({ length: verseLength }, (_, i) => i + 1).map(verse => <option value={verse}>Ayat {verse}</link>)}
+            </BaseSelect>}
+          </div>
+        </BaseContainer>
+      </nav>}
+
+      <slot /> 
+    </div>
+
+    <footer class="bg-background border-t border-neutral-200">
+      <BaseContainer class="space-y-4 py-10">
+        <div class="flex items-center justify-center gap-6">
+          <a href={`${base}/about`} class="text-sm font-medium text-neutral-600 hover:text-accent">Tentang Website</a>
+          <span class="text-neutral-300">|</span>
+          <a href="http://github.com/ibrahimalanshor/quran" class="text-sm font-medium text-neutral-600 flex items-center gap-2 hover:text-accent">
+            <Icon name="tabler:brand-github-filled" />
+            Source Code
+          </a>
         </div>
+        <p class="text-sm text-neutral-400 text-center">&copy; 2025 - Al-Quran Online</p>
       </BaseContainer>
-    </nav>}
-
-    <slot /> 
-
-    <BaseContainer tag="footer" class="space-y-4 py-10">
-      <div class="flex items-center justify-center gap-6">
-        <a href={`${base}/about`} class="text-sm font-medium text-gray-600 transition hover:text-emerald-600">Tentang Website</a>
-        <span class="text-gray-300">|</span>
-        <a href="http://github.com/ibrahimalanshor/quran" class="text-sm font-medium text-gray-600 flex items-center gap-2 transition hover:text-emerald-600">
-          <Icon name="tabler:brand-github-filled" />
-          Source Code
-        </a>
-      </div>
-      <p class="text-sm text-gray-400 text-center">&copy; 2025 - Al-Quran Online</p>
-    </BaseContainer>
+    </footer>
 
     <script>
       const chapterSelect = document.getElementById('chapter-select')

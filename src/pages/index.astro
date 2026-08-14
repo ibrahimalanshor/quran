@@ -10,47 +10,50 @@ const chapters = await getCollection('chapters')
 ---
 
 <Default withNavbar={false} title="Al-Quran Online Terjemahan dan Tafsir Bahasa Indonesia" description="Baca Al-Quran Digital Online dengan terjemahan dan tafsir dalam Bahasa Indonesia Lengkap 30 Juz">
-  <header class="bg-emerald-600 text-white h-52 flex flex-col items-center justify-center text-center shadow-lg">
-    <div class="px-4 w-full space-y-6">
-      <h1 class="font-bold text-4xl">Al-Quran Online</h1>
-      <div class="max-w-lg mx-auto relative">
-        <input type="search" placeholder="Cari nama surah" class="w-full h-12 px-5 rounded-full border-0 placeholder-gray-400 text-gray-700 shadow-md transition focus:outline-0 focus:ring-4 focus:ring-emerald-400" />
-        <button id="search-btn" title="Cari nama surah" class="absolute top-1.5 right-2 bg-emerald-500 text-white h-9 w-9 flex items-center justify-center rounded-full cursor-pointer transition focus:outline-0 focus:ring-4 focus:ring-emerald-400/50">
-          <Icon name="tabler:search" class="size-5" />
-        </button>
+  <header class="bg-background text-neutral-900 border-b border-neutral-200 bg-[url(/quran/pattern.png)] bg-repeat-x">
+    <BaseContainer class="w-full space-y-6 h-72 flex flex-col items-center justify-center text-center">
+      <div class="space-y-3">
+        <h1 class="font-bold text-4xl text-primary">Al-Quran Online</h1>
+        <p class="text-neutral-600">Baca Al-Quran teks arab, latin, terjemah dan tafsir Bahasa Indonesia.</p>
       </div>
-    </div>
+      <div class="w-full max-w-screen-sm mx-auto relative">
+        <input type="text" id="search" placeholder="Cari nama surah" class="w-full border border-neutral-300 h-12 px-5 rounded-full placeholder-neutral-400 text-neutral-900 transition focus:outline-0 focus:ring-2 focus:ring-secondary focus:border-secondary" />
+        <Icon name="tabler:search" class="size-5 absolute top-3.5 right-4 text-neutral-600" />
+      </div>
+    </BaseContainer>
   </header>
 
   <BaseContainer tag="main" class="py-10 space-y-6">
-    <h2 class="font-semibold text-xl border-l-4 border-emerald-500 pl-3">Daftar Surah</h2>
+    <h2 class="font-semibold text-xl text-primary flex items-center gap-2">
+      <Icon name="tabler:book-filled" class="text-accent" />
+      Daftar Surah
+    </h2>
 
-    <p id="search-not-found-message" class="text-gray-400 hidden">Pencarian surah tidak ditemukan</p>
+    <div class="">
+      <p id="search-not-found-message" class="text-neutral-500 hidden">Pencarian surah tidak ditemukan</p>
 
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {chapters.map(chapter => <BaseCard tag="a" href={`${base}/${chapter.data.slug}`} data-chapter={chapter.data.latin} hoverable focusable class="rounded-xl p-5 flex items-center justify-between transition hover:shadow-md focus:shadow-md group">
-        <div class="flex items-center gap-4">
-          <div class="w-10 h-10 flex items-center justify-center bg-emerald-50 font-bold text-emerald-600 rounded-lg transition group-hover:bg-emerald-600 group-hover:text-white group-focus:bg-emerald-600 group-focus:text-white">{chapter.id}</div>
-          <div>
-            <h3 class="font-bold">{chapter.data.latin}</h3>
-            <p class="text-xs uppercase text-gray-500 tracking-wider">{chapter.data.verses} ayat</p>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-x-8">
+        {chapters.map(chapter => <div data-chapter={chapter.data.latin} class="flex items-start justify-between">
+          <div class="space-y-1">
+            <h3 class="font-bold text-primary hover:text-accent">
+              <a href={`${base}/${chapter.data.slug}`}>{chapter.id}. {chapter.data.latin}</a>
+            </h3>
+            <p class="text-sm text-neutral-500">{chapter.data.verses} ayat</p>
           </div>
-        </div>
 
-        <p dir="rtl" class="text-emerald-700 text-2xl font-bold">{chapter.data.name}</p>
-      </BaseCard>)}
+          <a href={`${base}/${chapter.data.slug}`} dir="rtl" class="text-secondary text-2xl font-bold hover:text-accent">{chapter.data.name}</a>
+        </div>)}
+      </div>
     </div>
   </BaseContainer>
 </Default>
 
 <script>
-  const searchInput = document.querySelector('input[type=search]') as HTMLInputElement
+  const searchInput = document.querySelector('input#search') as HTMLInputElement
   const chapters = document.querySelectorAll('[data-chapter]')
   const searchNotFoundMsg = document.querySelector('#search-not-found-message') as HTMLParagraphElement
-  const searchBtn = document.querySelector('#search-btn') as HTMLButtonElement
 
   searchInput.addEventListener('input', () => search())
-  searchBtn.addEventListener('click', () => search())
 
   function search() {
     let found = false
