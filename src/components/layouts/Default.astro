@@ -59,13 +59,17 @@ const account = {
 	</head>
 	<body class="bg-white min-h-screen flex flex-col justify-between">
     <div class="grow">
-      {withNavbar && <nav class={`bg-white h-16 shadow-sm border-b border-gray-50 ${navbarSticky ? 'sticky top-0 left-0 z-10' : ''}`}>
-        <BaseContainer class="h-full flex items-center justify-between gap-2">
-          <a href={backUrl} class="flex items-center gap-2 text-emerald-600 font-bold hover:text-emerald-700">
-            <Icon name="tabler:arrow-back-up" class="shrink-0 size-5" />
-            <span class="hidden sm:block">Kembali</span>
+      {withNavbar && <nav class={`bg-white h-16 border-b border-neutral-200 ${navbarSticky ? 'sticky top-0 left-0 z-10' : ''}`}>
+        <BaseContainer class="h-full flex items-center justify-between gap-2 relative">
+          <a href={backUrl} class="flex items-center gap-2 text-accent font-bold hover:text-emerald-700">
+            <Icon name="tabler:home-filled" class="shrink-0 size-5" />
+            <span class="hidden sm:block">Beranda</span>
           </a>
-          <div class="flex items-center gap-2">
+          <slot name="nav-title" />
+          <button class="sm:hidden">
+            <Icon name="tabler:search" class="shrink-0 size-5" />
+          </button>
+          <div class="sm:flex items-center gap-2 hidden">
             <BaseSelect aria-label="Pilih Surah" id="chapter-select">
               <option selected disabled>Pilih Surah</option>
               {chapters.map(chapter => <option selected={Astro.url.pathname === `${base}/${chapter.data.slug}`} value={`${base}/${chapter.data.slug}`}>{chapter.id}. {chapter.data.latin}</link>)}

@@ -31,9 +31,22 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
 <Default navbarSticky title={`Surah ${chapter.data.latin}: Arab dan Terjemahan`} verseLength={verses.length} description={`"Surah ${chapter.data.latin} adalah surah no ${chapter.id} dalam Al-Quran yang terdiri dari ${chapter.data.verses} ayat`}>
   <meta name="quran-chapter" content={chapter.data.latin} slot="meta" />
 
-  <header class="py-10 bg-emerald-600 text-white">
-    <BaseContainer class="text-center space-y-4">
-      <div class="flex items-center justify-center gap-4">
+  <p class="absolute left-1/2 -translate-x-1/2 font-bold text-primary text-lg sm:hidden" slot="nav-title">{chapter.data.latin}</p>
+
+  <header class="py-10 bg-background text-primary border-b border-neutral-200">
+    <BaseContainer class="text-center space-y-4 md:flex items-center justify-between md:text-left">
+      <p dir="rtl" class="text-4xl text-secondary font-bold order-last">{chapter.data.name}</p>
+        <div class="space-y-4">
+          <h1 class="text-lg text-primary font-bold md:text-4xl">{chapter.data.latin}</h1>
+          <p class="flex items-center justify-center gap-4 text-neutral-700">
+            <span>Surah ke: {chapter.id}</span>
+            <span class="text-neutral-400">/</span>
+            <span>{chapter.data.type}</span>
+            <span class="text-neutral-400">/</span>
+            <span>Jumlah Ayat: {chapter.data.verses}</span>  
+          </p>
+        </div>
+      <!-- <div class="flex items-center justify-center gap-4">
         <span class="bg-emerald-500 text-white uppercase h-6 px-3 rounded-full inline-flex items-center justify-center text-xs font-bold tracking-widest">{chapter.data.type}</span>
         <span class="text-emerald-100">{chapter.data.translate}</span>
       </div>
@@ -43,10 +56,10 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
         <span>Surah ke: {chapter.id}</span>
         <span class="w-1 h-1 rounded-full bg-emerald-100 inline-block"></span>
         <span>Jumlah ayat: {chapter.data.verses}</span>
-      </div>
+      </div> -->
     </BaseContainer>
   </header>
-  <BaseContainer tag="main" class="py-8 space-y-6">
+  <BaseContainer tag="main" class="py-8 space-y-6 hidden">
     <article class="space-y-6">
       <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <BaseSelect aria-label="Loncat ke Ayat" class="select-ayat w-full sm:w-auto">
