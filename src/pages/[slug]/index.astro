@@ -33,7 +33,7 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
 
   <p class="absolute left-1/2 -translate-x-1/2 font-bold text-primary text-lg sm:hidden" slot="nav-title">{chapter.data.latin}</p>
 
-  <header class="py-12 md:py-16 bg-background text-primary border-b border-neutral-200 bg-[url(/quran/pattern.png)] bg-repeat-x">
+  <header class="py-12 md:py-16 bg-background border-b border-neutral-200 bg-[url(/quran/pattern.png)] bg-repeat-x">
     <BaseContainer class="text-center space-y-4 md:flex items-center justify-between md:text-left md:space-y-0">
       <p dir="rtl" class="text-4xl text-secondary font-bold order-last">{chapter.data.name}</p>
       <div class="space-y-4">
@@ -50,15 +50,9 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
   </header>
   <BaseContainer tag="main" class="py-8 space-y-6">
     <article class="space-y-6 lg:space-y-8">
-      <!-- <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between"> -->
-        <!-- <BaseSelect aria-label="Loncat ke Ayat" class="select-ayat w-full sm:w-auto">
-          <option disabled selected>Loncat ke Ayat</option>
-          {verses.map(verse => <option value={verse.data.verse}>Ayat {verse.data.verse}</option>)}
-        </BaseSelect> -->
-        {chapter.id !== '1' && chapter.id !== '9' && <div class="text-center">
-          <p dir="rtl" class="text-2xl leading-loose lg:text-3xl text-neutral-900">{bismillah}</p>
-        </div>}
-      <!-- </div> -->
+      {chapter.id !== '1' && chapter.id !== '9' && <div class="text-center">
+        <p dir="rtl" class="text-2xl leading-loose lg:text-3xl text-neutral-900">{bismillah}</p>
+      </div>}
       {verses.map(verse => <VerseRow verse={verse} />)}
     </article>
     <BasePagination

@@ -59,9 +59,9 @@ const account = {
 	</head>
 	<body class="bg-white min-h-screen flex flex-col justify-between">
     <div class="grow">
-      {withNavbar && <nav class={`bg-white h-16 border-b border-neutral-200 ${navbarSticky ? 'sticky top-0 left-0 z-10' : ''}`}>
+      {withNavbar && <nav class={`bg-white h-14 sm:h-16 border-b border-neutral-200 ${navbarSticky ? 'sticky top-0 left-0 z-10' : ''}`}>
         <BaseContainer class="h-full flex items-center justify-between gap-2 relative">
-          <a href={backUrl} class="flex items-center gap-2 text-accent font-bold hover:text-emerald-700">
+          <a href={base} class="flex items-center gap-2 text-accent font-bold hover:text-emerald-700">
             <Icon name="tabler:home-filled" class="shrink-0 size-5" />
             <span class="hidden sm:block">Beranda</span>
           </a>
