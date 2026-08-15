@@ -2,6 +2,6 @@
 const { class: classes = '', ...props } = Astro.props
 ---
 
-<select {...props} class={`h-10 pr-8 border-neutral-300 text-neutral-700 rounded-lg focus:outline-0 focus:ring-2 focus:ring-secondary focus:border-secondary ${classes}`}>
+<select {...props} class={`h-10 pr-8 border-neutral-300 text-neutral-700 rounded-md focus:outline-0 focus:ring-2 focus:ring-secondary focus:border-secondary ${classes}`}>
   <slot />
 </select>

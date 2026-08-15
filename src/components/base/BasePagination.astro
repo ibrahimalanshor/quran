@@ -3,22 +3,16 @@ import BaseCard from './BaseCard.astro'
 import { Icon } from 'astro-icon/components'
 
 const base = import.meta.env.BASE_URL
-const { prevUrl, prevName, nextUrl, nextName } = Astro.props
+const { prevUrl, prevName, nextUrl, nextName, class: classList = '' } = Astro.props
 ---
 
-<nav class={`border-t border-gray-200 py-12 flex items-center ${!prevUrl ? 'justify-end' : 'justify-between'}`}>
-  {prevUrl && <BaseCard tag="a" hoverable focusable href={`${base}/${prevUrl}`} class="py-3 px-6 rounded-xl flex items-center justify-between gap-4 group hover:text-emerald-600" variant="border">
-    <Icon name="tabler:chevron-left" class="size-5" />
-    <div>
-      <p class="text-[10px] uppercase font-bold tracking-widest text-gray-400 group-hover:text-emerald-500">Sebelumnya</p>
-      <p class="font-semibold text-gray-700 group-hover:text-emerald-600">{prevName}</p>
-    </div>
-  </BaseCard>}
-  {nextUrl && <BaseCard tag="a" hoverable focusable href={`${base}/${nextUrl}`} class="py-3 px-6 rounded-xl flex items-center justify-between gap-4 text-right group hover:text-emerald-600" variant="border">
-    <div>
-      <p class="text-[10px] uppercase font-bold tracking-widest text-gray-400 group-hover:text-emerald-500">Berikutnya</p>
-      <p class="font-semibold text-gray-700 group-hover:text-emerald-600">{nextName}</p>
-    </div>
-    <Icon name="tabler:chevron-right" class="size-5" />
-  </BaseCard>}
+<nav class={`flex items-center ${!prevUrl ? 'justify-end' : 'justify-between'} ${classList}`}>
+  {prevUrl && <a href={`${base}/${prevUrl}`} class="flex items-center gap-2 text-accent font-semibold hover:underline">
+    <Icon name="tabler:arrow-left" class="size-5" />
+    <span>{prevName}</span>
+  </a>}
+  {nextUrl && <a href={`${base}/${nextUrl}`} class="flex items-center gap-2 text-accent font-semibold hover:underline">
+    <span>{nextName}</span>
+    <Icon name="tabler:arrow-right" class="size-5" />
+  </a>}
 </nav>
