@@ -66,8 +66,8 @@ const account = {
             <span class="hidden sm:block">Beranda</span>
           </a>
           <slot name="nav-title" />
-          <button class="sm:hidden">
-            <Icon name="tabler:search" class="shrink-0 size-5" />
+          <button class="sm:hidden" id="chapter-filter-mobile-button">
+            <Icon name="tabler:search" class="shrink-0 size-5 text-accent" />
           </button>
           <div class="sm:flex items-center gap-2 hidden">
             <BaseSelect aria-label="Pilih Surah" id="chapter-select">
@@ -99,8 +99,33 @@ const account = {
       </BaseContainer>
     </footer>
 
+    <div class="hidden fixed inset-0 bg-black/50 z-10 flex items-center justify-center px-4 sm:hidden" id="chapter-filter-mobile-modal">
+      <form class="bg-white p-6 rounded-lg w-full space-y-4" id="chapter-filter-mobile">
+        <div class="flex flex-col gap-1">
+          <label for="chapter-filter-mobile-select" class="text-neutral-700">Pilih Surah</label>
+          <BaseSelect aria-label="Pilih Surah" id="chapter-filter-mobile-select" name="chapter" required>
+            <option selected disabled>Pilih Surah</option>
+            {chapters.map(chapter => <option data-verses={chapter.data.verses} selected={Astro.url.pathname === `${base}/${chapter.data.slug}`} value={`${base}/${chapter.data.slug}`}>{chapter.id}. {chapter.data.latin}</link>)}
+          </BaseSelect>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label for="verse-filter-mobile-select" class="text-neutral-700">Pilih Ayat</label>
+          <BaseSelect aria-label="Pilih Ayat" name="verse" id="verse-filter-mobile-select">
+            <option selected disabled>Pilih Ayat</option>
+            {Array.from({ length: verseLength }, (_, i) => i + 1).map(verse => <option value={verse}>Ayat {verse}</link>)}
+          </BaseSelect>
+        </div>
+        <button class="bg-accent w-full text-white font-semibold rounded-md h-10">Baca</button>
+      </form>
+    </div>
+
     <script>
       const chapterSelect = document.getElementById('chapter-select')
+      const chapterFilterMobileForm = document.getElementById('chapter-filter-mobile') as HTMLFormElement
+      const chapterFilterMobileSelect = document.getElementById('chapter-filter-mobile-select') as HTMLSelectElement
+      const verseFilterMobileSelect = document.getElementById('verse-filter-mobile-select') as HTMLSelectElement
+      const chapterilterMobileButton = document.getElementById('chapter-filter-mobile-button') as HTMLButtonElement
+      const chapterFilterMobileModal = document.getElementById('chapter-filter-mobile-modal') as HTMLDivElement
 
       chapterSelect?.addEventListener('change', e => {
         window.location.href = (e.target as HTMLSelectElement).value
@@ -118,6 +143,53 @@ const account = {
             }
           })
         })
+      chapterFilterMobileForm.addEventListener('submit', e => {
+        e.preventDefault()
+
+        const value = new FormData(chapterFilterMobileForm)
+
+        const verse = value.get('verse')
+
+        if (verse) {
+          window.location.href = `${value.get('chapter') as string}#${verse}`
+        } else {
+          window.location.href = value.get('chapter') as string
+        }
+      })
+      chapterFilterMobileSelect.addEventListener('change', () => {
+        const selectedOption = chapterFilterMobileSelect.querySelector(`option[value='${chapterFilterMobileSelect.value}']`) as HTMLOptionElement
+        const verses = Number(selectedOption.dataset.verses)
+
+        verseFilterMobileSelect.innerHTML = ''
+
+        const fragment = document.createDocumentFragment()
+
+        const option = document.createElement('option')
+        option.setAttribute('selected', 'selected')
+        option.setAttribute('disabled', 'disabled')
+
+        option.textContent = `Pilih Ayat`
+
+        fragment.appendChild(option)
+
+        for (let i = 1; i <= verses; i++) {
+          const option = document.createElement('option')
+          option.value = `${i}`
+          option.textContent = `Ayat ${i}`
+
+          fragment.appendChild(option)
+        }
+
+        verseFilterMobileSelect.appendChild(fragment)        
+      })
+      chapterilterMobileButton.addEventListener('click', () => {
+        chapterFilterMobileModal.classList.remove('hidden')
+      })
+      chapterFilterMobileModal.addEventListener('click', e => {
+        if (!chapterFilterMobileForm.contains(e.target as Node)) {
+          chapterFilterMobileModal.classList.add('hidden')
+        }
+      })
     </script>
 	</body>
 </html>
