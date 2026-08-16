@@ -5,8 +5,8 @@ import { Icon } from 'astro-icon/components'
 import Default from '../../components/layouts/Default.astro'
 import VerseRow from '../../components/verse/VerseRow.astro'
 import BaseContainer from '../../components/base/BaseContainer.astro'
-import BaseSelect from '../../components/base/BaseSelect.astro'
 import BasePagination from '../../components/base/BasePagination.astro'
+import BaseHeader from '../../components/base/BaseHeader.astro'
 
 interface Props {
   chapter: CollectionEntry<'chapters'>
@@ -33,7 +33,7 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
 
   <p class="absolute left-1/2 -translate-x-1/2 font-bold text-primary text-lg sm:hidden" slot="nav-title">{chapter.data.latin}</p>
 
-  <header class="py-12 md:py-16 bg-background border-b border-neutral-200 bg-[url(/quran/pattern.png)] bg-repeat-x">
+  <BaseHeader class="py-12 md:py-16">
     <BaseContainer class="text-center space-y-4 md:flex items-center justify-between md:text-left md:space-y-0">
       <p dir="rtl" class="text-4xl text-secondary font-bold order-last">{chapter.data.name}</p>
       <div class="space-y-4">
@@ -47,7 +47,7 @@ const bismillah = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلر
         </p>
       </div>
     </BaseContainer>
-  </header>
+  </BaseHeader>
   <BaseContainer tag="main" class="py-8 space-y-6">
     <article class="space-y-6 lg:space-y-8">
       {chapter.id !== '1' && chapter.id !== '9' && <div class="text-center">

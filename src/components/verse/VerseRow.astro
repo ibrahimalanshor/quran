@@ -1,6 +1,5 @@
 ---
 import { getEntry } from "astro:content"
-import BaseCard from "../base/BaseCard.astro"
 import BaseLink from "../base/BaseLink.astro"
 
 const base = import.meta.env.BASE_URL
@@ -36,7 +35,7 @@ const translations: string[] = verse.data.translation.split(/(\d+\))/)
     <span class="verse-text text-neutral-900">{verse.data.text}</span> 
     <span class="mx-2 text-3xl lg:text-4xl text-accent font-bold">{toArabicNum(`${verse.data.verse}`)}</span>
   </p>
-  <p class="verse-translation leading-relaxed text-neutral-600">
+  <p class="verse-translation leading-relaxed text-neutral-700">
     {translations.filter(text => !/^\d+\)$/.test(text)).map(text => text)}
   </p>      
   <div class="flex gap-4 justify-end lg:justify-start">

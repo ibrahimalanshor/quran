@@ -3,11 +3,11 @@ import { getCollection, getEntry } from 'astro:content'
 import type { CollectionEntry } from 'astro:content'
 import Default from '../../components/layouts/Default.astro'
 import BaseContainer from '../../components/base/BaseContainer.astro'
-import BaseCard from '../../components/base/BaseCard.astro'
 import VerseRow from '../../components/verse/VerseRow.astro'
 import BasePagination from '../../components/base/BasePagination.astro'
 import BaseLink from '../../components/base/BaseLink.astro'
 import { Icon } from 'astro-icon/components'
+import BaseHeader from '../../components/base/BaseHeader.astro'
 
 interface Props {
   chapter: CollectionEntry<'chapters'>
@@ -44,7 +44,7 @@ const nextChapter = !nextVerse ? null : await getEntry('chapters', nextVerse.dat
   <meta name="quran-chapter" content={chapter.data.latin} slot="meta" />
 
   <main>
-    <header class="bg-background py-12 md:py-16 border-b border-neutral-200 bg-[url(/quran/pattern.png)] bg-repeat-x">
+    <BaseHeader class="py-12 md:py-16">
       <BaseContainer class="text-center space-y-4 md:flex items-center justify-between md:text-left md:space-y-0">
         <p dir="rtl" class="text-4xl text-secondary font-bold order-last">{chapter.data.name}</p>
         <div class="space-y-4">
@@ -54,7 +54,7 @@ const nextChapter = !nextVerse ? null : await getEntry('chapters', nextVerse.dat
           </p>
         </div>
       </BaseContainer>  
-    </header>
+    </BaseHeader>
 
     <BaseContainer tag="article" class="py-8 space-y-6">
       <VerseRow verse={verse} withTafsirButton={false} />
@@ -63,7 +63,7 @@ const nextChapter = !nextVerse ? null : await getEntry('chapters', nextVerse.dat
           <Icon name="tabler:book-filled" class="text-accent" />
           Tafsir Ringkas Kemenag
         </h2>
-        <p class="leading-relaxed text-neutral-600">{tafsir.data.text}</p>
+        <p class="leading-relaxed text-neutral-700">{tafsir.data.text}</p>
         <div class="flex justify-end lg:justify-start">
           <BaseLink data-copy-content={`Tafsir QS. ${chapter.data.latin}: ${verse.data.verse}\n${tafsir.data.text}`} class="copy-tafser" icon="tabler:copy">
             Salin
