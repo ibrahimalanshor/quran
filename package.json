@@ -1,7 +1,7 @@
 {
   "name": "quran",
   "type": "module",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
     "@fontsource/inter": "^5.2.8",
     "@iconify-json/tabler": "^1.2.23",
     "@tailwindcss/vite": "^4.1.17",

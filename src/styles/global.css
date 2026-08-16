@@ -26,8 +26,13 @@
 }
 
 @theme {
-  --font-sans: 'Inter', sans-serif;
+  --font-sans: 'IBM Plex Sans', sans-serif;
   --font-arab: "LPMQ", sans-serif;
+
+  --color-primary: #061E29;
+  --color-secondary: #1D546D;
+  --color-accent: #5F9598;
+  --color-background: #F3F4F4;
 }
 
 @layer base {

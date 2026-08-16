@@ -4,7 +4,7 @@ import { Icon } from 'astro-icon/components'
 const { tag: Tag = 'button', class: classes = '', icon, ...props } = Astro.props
 ---
 
-<Tag { ...props } class={`cursor-pointer text-gray-500 flex items-center gap-2 text-sm transition hover:text-emerald-600 ${classes}`}>
+<Tag { ...props } class={`cursor-pointer text-neutral-500 flex items-center gap-2 text-sm transition hover:text-accent ${classes}`}>
   {icon && <Icon name={icon} class="size-5" />}
   <slot />
 </Tag>

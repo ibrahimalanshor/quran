@@ -3,10 +3,11 @@ import { getCollection, getEntry } from 'astro:content'
 import type { CollectionEntry } from 'astro:content'
 import Default from '../../components/layouts/Default.astro'
 import BaseContainer from '../../components/base/BaseContainer.astro'
-import BaseCard from '../../components/base/BaseCard.astro'
 import VerseRow from '../../components/verse/VerseRow.astro'
 import BasePagination from '../../components/base/BasePagination.astro'
 import BaseLink from '../../components/base/BaseLink.astro'
+import { Icon } from 'astro-icon/components'
+import BaseHeader from '../../components/base/BaseHeader.astro'
 
 interface Props {
   chapter: CollectionEntry<'chapters'>
@@ -42,30 +43,41 @@ const nextChapter = !nextVerse ? null : await getEntry('chapters', nextVerse.dat
 <Default backUrl={`${base}/${chapter.data.slug}`} title={`Surah ${chapter.data.latin} Ayat ${verse.data.verse}: Arab, Terjemahan, dan Tafsir`} description={`Baca surah ${chapter.data.latin} Ayat ${verse.data.verse} beserta terjemahan dan tafsir dalam Bahasa Indonesia`}>
   <meta name="quran-chapter" content={chapter.data.latin} slot="meta" />
 
-  <BaseContainer tag="main" class="py-10 space-y-8">
-    <header class="text-center">
-      <p dir="rtl" class="text-emerald-600 text-5xl mb-8">{chapter.data.name}</p>
-      <h1 class="font-bold text-3xl text-gray-900 mb-4">{chapter.data.latin}</h1>
-      <p class="text-gray-500 text-lg mb-4">Ayat {verse.data.verse}</p>
-      <hr class="w-16 h-1 bg-emerald-500 mx-auto rounded-full border-0">
-    </header>
-    <VerseRow verse={verse} withTafsirButton={false} />
-    <BaseCard class="p-6 rounded-2xl space-y-4">
-      <h2 class="font-bold text-xl text-gray-900">Tafsir Ringkas Kemenag</h2>
-      <p class="leading-relaxed text-gray-700">{tafsir.data.text}</p>
-      <div class="border-t border-gray-100 pt-4 flex gap-4 justify-end lg:justify-start">
-        <BaseLink data-copy-content={`Tafsir QS. ${chapter.data.latin}: ${verse.data.verse}\n${tafsir.data.text}`} class="copy-tafser" icon="tabler:copy">
-          Salin
-        </BaseLink>
+  <main>
+    <BaseHeader class="py-12 md:py-16">
+      <BaseContainer class="text-center space-y-4 md:flex items-center justify-between md:text-left md:space-y-0">
+        <p dir="rtl" class="text-4xl text-secondary font-bold order-last">{chapter.data.name}</p>
+        <div class="space-y-4">
+          <h1 class="text-xl text-primary font-bold md:text-4xl">{chapter.data.latin}: {verse.data.verse}</h1>
+          <p class="text-neutral-700">
+            Ayat {verse.data.verse} / {chapter.data.verses}
+          </p>
+        </div>
+      </BaseContainer>  
+    </BaseHeader>
+
+    <BaseContainer tag="article" class="py-8 space-y-6">
+      <VerseRow verse={verse} withTafsirButton={false} />
+      <div class="space-y-4 border-b-2 border-dashed border-neutral-200 pb-6 lg:pb-8">
+        <h2 class="font-bold text-xl text-neutral-900 flex items-center gap-2">
+          <Icon name="tabler:book-filled" class="text-accent" />
+          Tafsir Ringkas Kemenag
+        </h2>
+        <p class="leading-relaxed text-neutral-700">{tafsir.data.text}</p>
+        <div class="flex justify-end lg:justify-start">
+          <BaseLink data-copy-content={`Tafsir QS. ${chapter.data.latin}: ${verse.data.verse}\n${tafsir.data.text}`} class="copy-tafser" icon="tabler:copy">
+            Salin
+          </BaseLink>
+        </div>
       </div>
-    </BaseCard>
-    <BasePagination
-      prevUrl={prevVerse ? `${prevChapter!.data.slug}/${prevVerse.data.verse}` : null}
-      prevName={prevVerse ? `${prevChapter!.data.latin}: ${prevVerse.data.verse}` : null}
-      nextUrl={nextVerse ? `${nextChapter!.data.slug}/${nextVerse.data.verse}` : null}
-      nextName={nextVerse ? `${nextChapter!.data.latin}: ${nextVerse.data.verse}` : null}
-    />
-  </BaseContainer>
+      <BasePagination
+        prevUrl={prevVerse ? `${prevChapter!.data.slug}/${prevVerse.data.verse}` : null}
+        prevName={prevVerse ? `${prevChapter!.data.latin}: ${prevVerse.data.verse}` : null}
+        nextUrl={nextVerse ? `${nextChapter!.data.slug}/${nextVerse.data.verse}` : null}
+        nextName={nextVerse ? `${nextChapter!.data.latin}: ${nextVerse.data.verse}` : null}
+      />
+    </BaseContainer>
+  </main>
 </Default>
 
 <script>

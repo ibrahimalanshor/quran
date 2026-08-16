@@ -1,6 +1,5 @@
 ---
 import { getEntry } from "astro:content"
-import BaseCard from "../base/BaseCard.astro"
 import BaseLink from "../base/BaseLink.astro"
 
 const base = import.meta.env.BASE_URL
@@ -31,30 +30,19 @@ const translations: string[] = verse.data.translation.split(/(\d+\))/)
   .filter(Boolean)
 ---
 
-<BaseCard id={verse.data.verse} class="p-6 rounded-2xl space-y-4">
+<div id={verse.data.verse} class="space-y-4 pb-6 lg:pb-8 border-b-2 border-dashed border-neutral-200">
   <p dir="rtl" class="text-2xl sm:text-3xl leading-loose">
-    <span class="verse-text">{verse.data.text}</span> 
-    <span class="mx-2 text-3xl lg:text-4xl text-amber-700 font-bold">{toArabicNum(`${verse.data.verse}`)}</span>
+    <span class="verse-text text-neutral-900">{verse.data.text}</span> 
+    <span class="mx-2 text-3xl lg:text-4xl text-accent font-bold">{toArabicNum(`${verse.data.verse}`)}</span>
   </p>
-  <div class="space-y-2">
-    <p class="leading-relaxed text-emerald-700">
-      {verse.data.latin}
-    </p>
-    <p class="verse-translation leading-relaxed text-gray-700">
-      {translations.map(text => /^\d+\)$/.test(text) ? <sup class="text-emerald-600 font-bold ml-0.5">{text.slice(0, text.length - 1)}</sup> : <span>{text}</span>)}
-    </p>      
-  </div>
-  {footnotes.length > 0 && <blockquote class="bg-gray-50 rounded-lg p-3 border-l-2 border-gray-300 text-xs text-gray-500 leading-relaxed space-y-1">
-    {footnotes.map(footnote => <p>
-      <span class="font-bold text-gray-700">{getFootnoteNumber(footnote)}. </span>
-      {getFootnoteText(footnote)}
-    </p>)}
-  </blockquote>}
-  <div class="border-t border-gray-100 pt-4 flex gap-4 justify-end lg:justify-start">
+  <p class="verse-translation leading-relaxed text-neutral-700">
+    {translations.filter(text => !/^\d+\)$/.test(text)).map(text => text)}
+  </p>      
+  <div class="flex gap-4 justify-end lg:justify-start">
     {withTafsirButton && chapter && <BaseLink tag="a" href={`${base}/${chapter.data.slug}/${verse.data.verse}`} icon="tabler:book">Tafsir</BaseLink>}
     <BaseLink class="copy-verse" data-verse-number={verse.data.verse} icon="tabler:copy">Salin</BaseLink>
   </div>
-</BaseCard>
+</div>
 
 <script>
 import tippy from 'tippy.js'
